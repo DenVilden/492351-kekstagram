@@ -1,6 +1,6 @@
 'use strict';
 
-var USER_COMMENTS = [
+var USER_COMMENT = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
@@ -25,9 +25,7 @@ var fragment = document.createDocumentFragment();
 var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
-var picture = document.querySelector('#picture')
-    .content
-    .querySelector('.picture__link');
+var picture = document.querySelector('#picture').content.querySelector('.picture__link');
 
 // Генерирует случаный элемент массива
 var getRandomItem = function (arr) {
@@ -39,16 +37,16 @@ var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// Создает объект
-var createPhoto = function (photo) {
-  photo.url = 'photos/' + getRandomNumber(1, 25) + '.jpg';
+// Добавляет объект в массив
+var createPhoto = function (photo, index) {
+  photo.url = 'photos/' + (index + 1) + '.jpg';
   photo.likes = getRandomNumber(15, 200);
-  photo.comments = getRandomItem(USER_COMMENTS);
+  photo.comments = getRandomItem(USER_COMMENT);
   photo.description = getRandomItem(USER_DESCRIPTION);
 };
 
 // Создает объект в DOM
-var showPhoto = function (photo) {
+var clonePhoto = function (photo) {
   picture.querySelector('.picture__img').src = photo.url;
   picture.querySelector('.picture__stat--likes').textContent = photo.likes;
   picture.querySelector('.picture__stat--comments');
@@ -61,15 +59,17 @@ var showPhoto = function (photo) {
   socialComments.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
   socialComments.querySelector('.social__text').textContent = photo.comments;
 
-  var clonePhoto = picture.cloneNode(true);
-
-  return clonePhoto;
+  return picture.cloneNode(true);
 };
 
-for (var i = 0; i < 25; i++) {
-  createPhoto(photoObject);
-  photos.push(photoObject);
-  fragment.appendChild(showPhoto(photos[i]));
-}
+// Генерирует фото в массив и отрисовывает в DOM
+var buildPhoto = function (obj, arr) {
+  for (var i = 0; i < 25; i++) {
+    createPhoto(obj, i);
+    arr.push(obj);
+    fragment.appendChild(clonePhoto(arr[i]));
+  }
+  picturesList.appendChild(fragment);
+};
 
-picturesList.appendChild(fragment);
+buildPhoto(photoObject, photos);
