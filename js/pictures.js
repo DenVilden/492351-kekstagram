@@ -18,6 +18,8 @@ var USER_DESCRIPTION = [
   'Вот это тачка!'
 ];
 
+var ESC_KEYCODE = 27;
+
 var photos = [];
 var photoObject = {};
 
@@ -26,6 +28,18 @@ var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
 var picture = document.querySelector('#picture').content.querySelector('.picture__link');
+var uploadFile = picturesList.querySelector('#upload-file');
+var uploadOverlay = picturesList.querySelector('.img-upload__overlay');
+var uploadCancel = picturesList.querySelector('#upload-cancel');
+var uploadPreview = picturesList.querySelector('.img-upload__preview');
+var resizePlus = picturesList.querySelector('.resize__control--plus');
+var resizeMinus = picturesList.querySelector('.resize__control--minus');
+var effectNone = picturesList.querySelector('#effect-none');
+var effectChrome = picturesList.querySelector('#effect-chrome');
+var effectSepia = picturesList.querySelector('#effect-sepia');
+var effectMarvin = picturesList.querySelector('#effect-marvin');
+var effectPhobos = picturesList.querySelector('#effect-phobos');
+var effectHeat = picturesList.querySelector('#effect-heat');
 
 // Генерирует случаный элемент массива
 var getRandomItem = function (arr) {
@@ -71,5 +85,98 @@ var buildPhoto = function (obj, arr) {
   }
   picturesList.appendChild(fragment);
 };
-
 buildPhoto(photoObject, photos);
+
+
+// Проверка на нажатие ESC
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeUpload();
+  }
+};
+
+// Прячет окно редактирования фото
+var closeUpload = function () {
+  uploadOverlay.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+uploadFile.addEventListener('change', function () {
+  uploadOverlay.classList.remove('hidden');
+});
+
+uploadCancel.addEventListener('click', function () {
+  closeUpload();
+});
+
+uploadCancel.addEventListener('keydown', function () {
+  closeUpload();
+});
+
+// Увеличивает масштаб фото на 25%
+var increaseValue = function () {
+  var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
+  var step = 25;
+  value = isNaN(value) ? 0 : value + step;
+  value = (value > 100) ? value = 100 : value++;
+  picturesList.querySelector('.resize__control--value').value = value + '%';
+  picturesList.querySelector('.img-upload__preview').style.transform = 'scale(' + value / 100 + ')';
+};
+
+// Уменьшает масштаб фото на 25%
+var decreaseValue = function () {
+  var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
+  var step = 25;
+  value = isNaN(value) ? 0 : value - step;
+  value = (value < 25) ? value = 25 : value--;
+  picturesList.querySelector('.resize__control--value').value = value + '%';
+  uploadPreview.style.transform = 'scale(' + value / 100 + ')';
+};
+
+resizePlus.addEventListener('click', function () {
+  increaseValue();
+});
+
+resizeMinus.addEventListener('click', function () {
+  decreaseValue();
+});
+
+var removeAllClasses = function () {
+  uploadPreview.querySelector('img').className = '';
+};
+
+// Оригинал
+effectNone.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--none');
+});
+
+// Хром
+effectChrome.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--chrome');
+});
+
+// Сепия
+effectSepia.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--sepia');
+});
+
+// Марвин
+effectMarvin.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--marvin');
+});
+
+// Фобос
+effectPhobos.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--phobos');
+});
+
+// Хит
+effectHeat.addEventListener('click', function () {
+  removeAllClasses();
+  uploadPreview.querySelector('img').classList.add('effects__preview--heat');
+});
