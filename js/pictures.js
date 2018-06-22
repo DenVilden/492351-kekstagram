@@ -27,19 +27,18 @@ var fragment = document.createDocumentFragment();
 var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
-var picture = document.querySelector('#picture').content.querySelector('.picture__link');
+var picture = document.querySelector('#picture')
+    .content
+    .querySelector('.picture__link');
 var uploadFile = picturesList.querySelector('#upload-file');
 var uploadOverlay = picturesList.querySelector('.img-upload__overlay');
 var uploadCancel = picturesList.querySelector('#upload-cancel');
+var bigPictureCancel = bigPicture.querySelector('#picture-cancel');
 var uploadPreview = picturesList.querySelector('.img-upload__preview');
 var resizePlus = picturesList.querySelector('.resize__control--plus');
 var resizeMinus = picturesList.querySelector('.resize__control--minus');
-var effectNone = picturesList.querySelector('#effect-none');
-var effectChrome = picturesList.querySelector('#effect-chrome');
-var effectSepia = picturesList.querySelector('#effect-sepia');
-var effectMarvin = picturesList.querySelector('#effect-marvin');
-var effectPhobos = picturesList.querySelector('#effect-phobos');
-var effectHeat = picturesList.querySelector('#effect-heat');
+var photoEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+var textHashtags = picturesList.querySelector('.text__hashtags');
 
 // Генерирует случаный элемент массива
 var getRandomItem = function (arr) {
@@ -77,27 +76,33 @@ var clonePhoto = function (photo) {
 };
 
 // Генерирует фото в массив и отрисовывает в DOM
-var buildPhoto = function (obj, arr) {
+var buildPhoto = function () {
   for (var i = 0; i < 25; i++) {
-    createPhoto(obj, i);
-    arr.push(obj);
-    fragment.appendChild(clonePhoto(arr[i]));
+    createPhoto(photoObject, i);
+    photos.push(photoObject);
+    var clone = clonePhoto(photos[i]);
+    clone.addEventListener('click', function () {
+      bigPicture.classList.remove('hidden');
+    });
+    fragment.appendChild(clone);
   }
   picturesList.appendChild(fragment);
 };
-buildPhoto(photoObject, photos);
+
+buildPhoto();
 
 
 // Проверка на нажатие ESC
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
-    closeUpload();
+    closePhoto();
   }
 };
 
 // Прячет окно редактирования фото
-var closeUpload = function () {
+var closePhoto = function () {
   uploadOverlay.classList.add('hidden');
+  bigPicture.classList.add('hidden');
   document.addEventListener('keydown', onPopupEscPress);
 };
 
@@ -105,26 +110,27 @@ uploadFile.addEventListener('change', function () {
   uploadOverlay.classList.remove('hidden');
 });
 
-uploadCancel.addEventListener('click', function () {
-  closeUpload();
-});
+uploadCancel.addEventListener('click', closePhoto);
+uploadCancel.addEventListener('keydown', closePhoto);
 
-uploadCancel.addEventListener('keydown', function () {
-  closeUpload();
-});
+bigPictureCancel.addEventListener('click', closePhoto);
+bigPictureCancel.addEventListener('keydown', closePhoto);
+
 
 // Увеличивает масштаб фото на 25%
-var increaseValue = function () {
+var increaseResize = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value + step;
   value = (value > 100) ? value = 100 : value++;
   picturesList.querySelector('.resize__control--value').value = value + '%';
-  picturesList.querySelector('.img-upload__preview').style.transform = 'scale(' + value / 100 + ')';
+  uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
 
+resizePlus.addEventListener('click', increaseResize);
+
 // Уменьшает масштаб фото на 25%
-var decreaseValue = function () {
+var decreaseResize = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value - step;
@@ -133,50 +139,60 @@ var decreaseValue = function () {
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
 
-resizePlus.addEventListener('click', function () {
-  increaseValue();
-});
+resizeMinus.addEventListener('click', decreaseResize);
 
-resizeMinus.addEventListener('click', function () {
-  decreaseValue();
-});
 
-var removeAllClasses = function () {
+var removeEffectsClasses = function () {
   uploadPreview.querySelector('img').className = '';
 };
 
-// Оригинал
-effectNone.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--none');
-});
+// Меняет эффект фото по клику
+var listenEffectsButton = function () {
+  for (var index in photoEffects) {
+    if ({}.hasOwnProperty.call(photoEffects, index)) {
+      var obj = picturesList.querySelector('#effect-' + photoEffects[index]);
+      obj.addEventListener('click', function () {
+        var name = photoEffects[index];
+        return function () {
+          removeEffectsClasses();
+          uploadPreview.querySelector('img').classList.add('effects__preview--' + name);
+        };
+      }(name));
+    }
+  }
+};
 
-// Хром
-effectChrome.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--chrome');
-});
+listenEffectsButton();
 
-// Сепия
-effectSepia.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--sepia');
-});
+// Проверка валидности хештегов
+textHashtags.addEventListener('input', function (evt) {
+  var target = evt.target;
+  var split = target.value.split(' ');
+  var uniqueHashtags = [];
 
-// Марвин
-effectMarvin.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--marvin');
-});
+  for (var i = 0; i < split.length; i++) {
+    uniqueHashtags[split[i].toUpperCase()] = split[i];
+  }
 
-// Фобос
-effectPhobos.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--phobos');
-});
+  for (var index in uniqueHashtags) {
+    if ({}.hasOwnProperty.call(uniqueHashtags, index)) {
+      var hashtag = uniqueHashtags[index];
 
-// Хит
-effectHeat.addEventListener('click', function () {
-  removeAllClasses();
-  uploadPreview.querySelector('img').classList.add('effects__preview--heat');
+      if (hashtag.indexOf('#') !== 0) {
+        target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+      } else if (hashtag.length < 2) {
+        target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
+      } else if (hashtag.indexOf('#', 2) > 1) {
+        target.setCustomValidity('Хэш-теги должны разделяться пробелами');
+      } else if (split.length > 1) {
+        if (hashtag === hashtag) {
+          target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+        }
+      } else if (split.length > 5) {
+        target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+      } else {
+        target.setCustomValidity('');
+      }
+    }
+  }
 });
