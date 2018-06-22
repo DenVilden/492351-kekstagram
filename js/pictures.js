@@ -141,7 +141,7 @@ var decreaseResize = function () {
 resizeMinus.addEventListener('click', decreaseResize);
 
 
-var removeAllClasses = function () {
+var removeEffectsClasses = function () {
   uploadPreview.querySelector('img').className = '';
 };
 
@@ -153,7 +153,7 @@ var listenEffectsButton = function () {
       obj.addEventListener('click', function () {
         var name = photoEffects[index];
         return function () {
-          removeAllClasses();
+          removeEffectsClasses();
           uploadPreview.querySelector('img').classList.add('effects__preview--' + name);
         };
       }(name));
