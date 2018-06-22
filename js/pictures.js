@@ -90,7 +90,6 @@ var buildPhoto = function () {
 
 buildPhoto();
 
-
 // Проверка на нажатие ESC
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -115,13 +114,12 @@ uploadCancel.addEventListener('keydown', closePhoto);
 bigPictureCancel.addEventListener('click', closePhoto);
 bigPictureCancel.addEventListener('keydown', closePhoto);
 
-
 // Увеличивает масштаб фото на 25%
 var increaseResize = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value + step;
-  value = (value > 100) ? value = 100 : value++;
+  value = (value > 100) ? 100 : value;
   picturesList.querySelector('.resize__control--value').value = value + '%';
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
@@ -133,13 +131,12 @@ var decreaseResize = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value - step;
-  value = (value < 25) ? value = 25 : value--;
+  value = (value < 25) ? 25 : value;
   picturesList.querySelector('.resize__control--value').value = value + '%';
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
 
 resizeMinus.addEventListener('click', decreaseResize);
-
 
 var removeEffectsClasses = function () {
   uploadPreview.querySelector('img').className = '';
