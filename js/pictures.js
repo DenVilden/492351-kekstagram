@@ -179,7 +179,7 @@ textHashtags.addEventListener('input', function (evt) {
         target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
       } else if (hashtag.indexOf('#', 2) > 1) {
         target.setCustomValidity('Хэш-теги должны разделяться пробелами');
-      } else if (split.indexOf(hashtag) !== 0) {
+      } else if (split.indexOf(hashtag) !== 0) { // Дубликаты так и не сделал
         target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
       } else if (split.length > 5) {
         target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
