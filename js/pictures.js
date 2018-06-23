@@ -120,7 +120,7 @@ var increaseResize = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value + step;
-  value = (value > 100) ? 100 : value++;
+  value = (value > 100) ? 100 : value;
   picturesList.querySelector('.resize__control--value').value = value + '%';
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
@@ -165,25 +165,22 @@ listenEffectsButton();
 textHashtags.addEventListener('input', function (evt) {
   var target = evt.target;
   var split = target.value.split(' ');
-  var uniqueHashtags = [];
 
   for (var i = 0; i < split.length; i++) {
-    uniqueHashtags[split[i].toUpperCase()] = split[i];
+    split[i] = split[i].toLowerCase();
   }
 
-  for (var index in uniqueHashtags) {
-    if ({}.hasOwnProperty.call(uniqueHashtags, index)) {
-      var hashtag = uniqueHashtags[index];
+  for (var index in split) {
+    if ({}.hasOwnProperty.call(split, index)) {
+      var hashtag = split[index];
       if (hashtag.indexOf('#') !== 0) {
         target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
       } else if (hashtag.length < 2) {
         target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
       } else if (hashtag.indexOf('#', 2) > 1) {
         target.setCustomValidity('Хэш-теги должны разделяться пробелами');
-      } else if (split.length > 1) {
-        if (hashtag === hashtag) {
-          target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
-        }
+      } else if (split.indexOf(hashtag) !== 0) {
+        target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
       } else if (split.length > 5) {
         target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
       } else {
