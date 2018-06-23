@@ -18,6 +18,8 @@ var USER_DESCRIPTION = [
   'Вот это тачка!'
 ];
 
+var ESC_KEYCODE = 27;
+
 var photos = [];
 var photoObject = {};
 
@@ -25,7 +27,17 @@ var fragment = document.createDocumentFragment();
 var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
-var picture = document.querySelector('#picture').content.querySelector('.picture__link');
+var picture = document.querySelector('#picture')
+    .content
+    .querySelector('.picture__link');
+var uploadFile = picturesList.querySelector('#upload-file');
+var uploadOverlay = picturesList.querySelector('.img-upload__overlay');
+var uploadCancel = picturesList.querySelector('#upload-cancel');
+var bigPictureCancel = bigPicture.querySelector('#picture-cancel');
+var uploadPreview = picturesList.querySelector('.img-upload__preview');
+var resizePlus = picturesList.querySelector('.resize__control--plus');
+var resizeMinus = picturesList.querySelector('.resize__control--minus');
+var photoEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
 // Генерирует случаный элемент массива
 var getRandomItem = function (arr) {
@@ -63,13 +75,87 @@ var clonePhoto = function (photo) {
 };
 
 // Генерирует фото в массив и отрисовывает в DOM
-var buildPhoto = function (obj, arr) {
+var buildPhoto = function () {
   for (var i = 0; i < 25; i++) {
-    createPhoto(obj, i);
-    arr.push(obj);
-    fragment.appendChild(clonePhoto(arr[i]));
+    createPhoto(photoObject, i);
+    photos.push(photoObject);
+    var clone = clonePhoto(photos[i]);
+    clone.addEventListener('click', function () {
+      bigPicture.classList.remove('hidden');
+    });
+    fragment.appendChild(clone);
   }
   picturesList.appendChild(fragment);
 };
 
-buildPhoto(photoObject, photos);
+buildPhoto();
+
+// Проверка на нажатие ESC
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePhoto();
+  }
+};
+
+// Прячет окно редактирования фото
+var closePhoto = function () {
+  uploadOverlay.classList.add('hidden');
+  bigPicture.classList.add('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+uploadFile.addEventListener('change', function () {
+  uploadOverlay.classList.remove('hidden');
+});
+
+uploadCancel.addEventListener('click', closePhoto);
+uploadCancel.addEventListener('keydown', closePhoto);
+
+bigPictureCancel.addEventListener('click', closePhoto);
+bigPictureCancel.addEventListener('keydown', closePhoto);
+
+// Увеличивает масштаб фото на 25%
+var increaseResize = function () {
+  var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
+  var step = 25;
+  value = isNaN(value) ? 0 : value + step;
+  value = (value > 100) ? 100 : value;
+  picturesList.querySelector('.resize__control--value').value = value + '%';
+  uploadPreview.style.transform = 'scale(' + value / 100 + ')';
+};
+
+resizePlus.addEventListener('click', increaseResize);
+
+// Уменьшает масштаб фото на 25%
+var decreaseResize = function () {
+  var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
+  var step = 25;
+  value = isNaN(value) ? 0 : value - step;
+  value = (value < 25) ? 25 : value;
+  picturesList.querySelector('.resize__control--value').value = value + '%';
+  uploadPreview.style.transform = 'scale(' + value / 100 + ')';
+};
+
+resizeMinus.addEventListener('click', decreaseResize);
+
+var removeEffectsClasses = function () {
+  uploadPreview.querySelector('img').className = '';
+};
+
+// Меняет эффект фото по клику
+var listenEffectsButton = function () {
+  for (var index in photoEffects) {
+    if ({}.hasOwnProperty.call(photoEffects, index)) {
+      var obj = picturesList.querySelector('#effect-' + photoEffects[index]);
+      obj.addEventListener('click', function () {
+        var name = photoEffects[index];
+        return function () {
+          removeEffectsClasses();
+          uploadPreview.querySelector('img').classList.add('effects__preview--' + name);
+        };
+      }(name));
+    }
+  }
+};
+
+listenEffectsButton();
