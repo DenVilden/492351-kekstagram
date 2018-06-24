@@ -161,12 +161,12 @@ var listenEffectsButton = function () {
     var name = photoEffects[i];
     var obj = picturesList.querySelector('#effect-' + name);
 
-    obj.addEventListener('click', function (str) {
+    obj.addEventListener('click', (function (str) {
       return function () {
         removeEffectsClass();
         uploadPreview.querySelector('img').classList.add('effects__preview--' + str);
       };
-    }(name));
+    })(name));
   }
 };
 listenEffectsButton();
