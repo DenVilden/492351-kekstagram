@@ -154,6 +154,11 @@ resizeMinus.addEventListener('click', decreaseScale);
 // Обнуляет эффект фото
 function removeEffectsClass() {
   uploadPreview.removeAttribute('class');
+  uploadPreview.removeAttribute('style');
+  scaleLevel.removeAttribute('style');
+  scalePin.removeAttribute('style');
+  picturesList.querySelector('.scale__value').value = 100;
+  uploadPreview.classList.add('img-upload__preview');
 }
 
 // Меняет эффект фото по клику
@@ -222,9 +227,23 @@ scalePin.addEventListener('mousedown', function (evt) {
     scaleLevel.style.width = currentCoords + '%';
     picturesList.querySelector('.scale__value').value = currentCoords;
 
-    uploadPreview.style.filter = 'grayscale(' + currentCoords / 100 + ')';
-    // uploadPreview.querySelector('img.effects__preview--sepia').style.filter = 'sepia(' + currentCoords / 100 + ')';
-    // picturesList.querySelector('.effects__preview--marvin').style.filter = 'invert(' + currentCoords + ') + %';
+    // Хром
+    if (uploadPreview.classList.contains('effects__preview--chrome')) {
+      uploadPreview.style.filter = 'grayscale(' + currentCoords / 100 + ')';
+    // Сепия
+    } else if (uploadPreview.classList.contains('effects__preview--sepia')) {
+      uploadPreview.style.filter = 'sepia(' + currentCoords / 100 + ')';
+    // Марвин
+    } else if (uploadPreview.classList.contains('effects__preview--marvin')) {
+      uploadPreview.style.filter = 'invert(' + currentCoords + '%' + ')';
+    // Фобос
+    } else if (uploadPreview.classList.contains('effects__preview--phobos')) {
+      uploadPreview.style.filter = 'blur(' + 5 * currentCoords / 100 + 'px' + ')';
+    // Хит
+    } else if (uploadPreview.classList.contains('effects__preview--heat')) {
+      var heat = (3 * currentCoords / 100) < 1 ? 1 : (3 * currentCoords / 100); // Ограничение до 1 яркости
+      uploadPreview.style.filter = 'brightness(' + heat + ')';
+    }
   }
 
   function onMouseUp(upEvt) {
@@ -237,6 +256,3 @@ scalePin.addEventListener('mousedown', function (evt) {
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
 });
-
-
-// picturesList.querySelector('.img-upload__scale').classList.add('hidden');
