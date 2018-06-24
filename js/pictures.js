@@ -38,6 +38,7 @@ var uploadPreview = picturesList.querySelector('.img-upload__preview');
 var resizePlus = picturesList.querySelector('.resize__control--plus');
 var resizeMinus = picturesList.querySelector('.resize__control--minus');
 var photoEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+var textHashtags = picturesList.querySelector('.text__hashtags');
 
 // Генерирует случаный элемент массива
 var getRandomItem = function (arr) {
@@ -48,6 +49,19 @@ var getRandomItem = function (arr) {
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+function hasDoublicates(arr) {
+  var obj = {};
+  for (var i = 0; i < arr.length; i++) {
+    var lowCase = arr[i].toLowerCase();
+    if (Object.keys(obj).indexOf(lowCase) > -1) {
+      return true; // Если есть дубликаты
+    } else {
+      obj[lowCase] = arr[i];
+    }
+  }
+  return false;
+}
 
 // Добавляет объект в массив
 var createPhoto = function (photo, index) {
@@ -104,6 +118,7 @@ var closePhoto = function () {
   document.addEventListener('keydown', onPopupEscPress);
 };
 
+// Добавляет фото на страницу
 uploadFile.addEventListener('change', function () {
   uploadOverlay.classList.remove('hidden');
 });
@@ -115,7 +130,7 @@ bigPictureCancel.addEventListener('click', closePhoto);
 bigPictureCancel.addEventListener('keydown', closePhoto);
 
 // Увеличивает масштаб фото на 25%
-var increaseResize = function () {
+var increaseScale = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value + step;
@@ -123,11 +138,12 @@ var increaseResize = function () {
   picturesList.querySelector('.resize__control--value').value = value + '%';
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
+resizePlus.addEventListener('click', increaseScale);
 
 resizePlus.addEventListener('click', increaseResize);
 
 // Уменьшает масштаб фото на 25%
-var decreaseResize = function () {
+var decreaseScale = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
   var step = 25;
   value = isNaN(value) ? 0 : value - step;
@@ -135,27 +151,48 @@ var decreaseResize = function () {
   picturesList.querySelector('.resize__control--value').value = value + '%';
   uploadPreview.style.transform = 'scale(' + value / 100 + ')';
 };
+resizeMinus.addEventListener('click', decreaseScale);
 
-resizeMinus.addEventListener('click', decreaseResize);
-
-var removeEffectsClasses = function () {
+var removeEffectsClass = function () {
   uploadPreview.querySelector('img').className = '';
 };
 
 // Меняет эффект фото по клику
 var listenEffectsButton = function () {
-  for (var index in photoEffects) {
-    if ({}.hasOwnProperty.call(photoEffects, index)) {
-      var obj = picturesList.querySelector('#effect-' + photoEffects[index]);
-      obj.addEventListener('click', function () {
-        var name = photoEffects[index];
-        return function () {
-          removeEffectsClasses();
-          uploadPreview.querySelector('img').classList.add('effects__preview--' + name);
-        };
-      }(name));
-    }
+  for (var i = 0; i < photoEffects.length; i++) {
+    var name = photoEffects[i];
+    var obj = picturesList.querySelector('#effect-' + name);
+
+    obj.addEventListener('click', (function (str) {
+      return function () {
+        removeEffectsClass();
+        uploadPreview.querySelector('img').classList.add('effects__preview--' + str);
+      };
+    })(name));
   }
 };
-
 listenEffectsButton();
+
+// Проверка валидности хештегов
+textHashtags.addEventListener('input', function (evt) {
+  var target = evt.target;
+  var split = target.value.split(' ');
+
+  for (var i = 0; i < split.length; i++) {
+    var hashtag = split[i];
+
+    if (hashtag.indexOf('#') !== 0) {
+      target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+    } else if (hashtag.length < 2) {
+      target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
+    } else if (hashtag.indexOf('#', 2) > 1) {
+      target.setCustomValidity('Хэш-теги должны разделяться пробелами');
+    } else if (hasDoublicates(split)) {
+      target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+    } else if (split.length > 5) {
+      target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
+    } else {
+      target.setCustomValidity('');
+    }
+  }
+});
