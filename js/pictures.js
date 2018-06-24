@@ -140,6 +140,8 @@ var increaseScale = function () {
 };
 resizePlus.addEventListener('click', increaseScale);
 
+resizePlus.addEventListener('click', increaseResize);
+
 // Уменьшает масштаб фото на 25%
 var decreaseScale = function () {
   var value = parseInt(picturesList.querySelector('.resize__control--value').value, 10);
