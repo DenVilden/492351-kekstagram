@@ -54,7 +54,7 @@ function hasDoublicates(arr) {
   var obj = {};
   for (var i = 0; i < arr.length; i++) {
     var lowCase = arr[i].toLowerCase();
-    if (Object.keys(obj).indexOf(lowCase) === 0) {
+    if (Object.keys(obj).indexOf(lowCase) > -1) {
       return true; // Если есть дубликаты
     } else {
       obj[lowCase] = arr[i];
