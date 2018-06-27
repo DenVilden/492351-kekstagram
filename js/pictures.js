@@ -24,7 +24,9 @@ var photos = [];
 var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
-var picture = document.querySelector('#picture').content;
+var picture = document.querySelector('#picture')
+  .content
+  .querySelector('.picture__link');
 var uploadFile = picturesList.querySelector('#upload-file');
 var uploadOverlay = picturesList.querySelector('.img-upload__overlay');
 var uploadCancel = picturesList.querySelector('#upload-cancel');
