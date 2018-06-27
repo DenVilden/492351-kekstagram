@@ -213,7 +213,7 @@ scalePin.addEventListener('mousedown', function () {
     moveCoords = (moveCoords > 100) ? 100 : moveCoords;
     moveCoords = (moveCoords < 0) ? 0 : moveCoords;
     scalePin.style.left = moveCoords + '%';
-    scaleLevel.style.width = (moveCoords - 2) + '%';
+    scaleLevel.style.width = (moveCoords) + '%';
     picturesList.querySelector('.scale__value').value = moveCoords;
 
     // Хром
