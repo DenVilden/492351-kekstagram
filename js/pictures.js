@@ -20,13 +20,11 @@ var ESC_KEYCODE = 27;
 
 var photos = [];
 
-var fragment = document.createDocumentFragment();
+
 var picturesList = document.querySelector('.pictures');
 var bigPicture = document.querySelector('.big-picture');
 var socialComments = document.querySelector('.social__comments');
-var picture = document.querySelector('#picture')
-    .content
-    .querySelector('.picture__link');
+var picture = document.querySelector('#picture').content;
 var uploadFile = picturesList.querySelector('#upload-file');
 var uploadOverlay = picturesList.querySelector('.img-upload__overlay');
 var uploadCancel = picturesList.querySelector('#upload-cancel');
@@ -92,6 +90,8 @@ function clonePhoto(arr) {
 
 // Генерирует фото в массив и отрисовывает в DOM
 function buildPhoto() {
+  var fragment = document.createDocumentFragment();
+
   for (var i = 0; i < 25; i++) {
     photos.push(createPhoto(i));
     var clone = clonePhoto(photos[i]);
@@ -202,53 +202,38 @@ textHashtags.addEventListener('input', function (evt) {
 });
 
 // Оживляет слайдер
-scalePin.addEventListener('mousedown', function (evt) {
-  evt.preventDefault();
+scalePin.addEventListener('mousedown', function () {
+  var scaleWidth = scaleLevel.offsetWidth;
+  var startCoords = scaleLevel.getBoundingClientRect().left;
 
-  var startCoords = {
-    x: evt.clientX
-  };
-
-  function onMouseMove(moveEvt) {
-    moveEvt.preventDefault();
-
-    var shift = {
-      x: startCoords.x - moveEvt.clientX
-    };
-
-    startCoords = {
-      x: moveEvt.clientX
-    };
-
-    var currentCoords = Math.round((scalePin.offsetLeft - shift.x) / 453 * 100); // Координаты в %
-    currentCoords = (currentCoords > 100) ? 100 : currentCoords;
-    currentCoords = (currentCoords < 0) ? 0 : currentCoords;
-    scalePin.style.left = currentCoords + '%';
-    scaleLevel.style.width = currentCoords + '%';
-    picturesList.querySelector('.scale__value').value = currentCoords;
+  function onMouseMove(evt) {
+    var moveCoords = parseInt(((evt.clientX - startCoords) / scaleWidth * 100).toFixed(2), 10); // Координаты в %
+    moveCoords = (moveCoords > 100) ? 100 : moveCoords;
+    moveCoords = (moveCoords < 0) ? 0 : moveCoords;
+    scalePin.style.left = moveCoords + '%';
+    scaleLevel.style.width = moveCoords + '%';
+    picturesList.querySelector('.scale__value').value = moveCoords;
 
     // Хром
     if (uploadPreview.classList.contains('effects__preview--chrome')) {
-      uploadPreview.style.filter = 'grayscale(' + currentCoords / 100 + ')';
+      uploadPreview.style.filter = 'grayscale(' + moveCoords / 100 + ')';
     // Сепия
     } else if (uploadPreview.classList.contains('effects__preview--sepia')) {
-      uploadPreview.style.filter = 'sepia(' + currentCoords / 100 + ')';
+      uploadPreview.style.filter = 'sepia(' + moveCoords / 100 + ')';
     // Марвин
     } else if (uploadPreview.classList.contains('effects__preview--marvin')) {
-      uploadPreview.style.filter = 'invert(' + currentCoords + '%' + ')';
+      uploadPreview.style.filter = 'invert(' + moveCoords + '%' + ')';
     // Фобос
     } else if (uploadPreview.classList.contains('effects__preview--phobos')) {
-      uploadPreview.style.filter = 'blur(' + 5 * currentCoords / 100 + 'px' + ')';
+      uploadPreview.style.filter = 'blur(' + 5 * moveCoords / 100 + 'px' + ')';
     // Хит
     } else if (uploadPreview.classList.contains('effects__preview--heat')) {
-      var heat = (3 * currentCoords / 100) < 1 ? 1 : (3 * currentCoords / 100); // Ограничение до 1 яркости
+      var heat = (3 * moveCoords / 100) < 1 ? 1 : (3 * moveCoords / 100); // Ограничение до 1 яркости
       uploadPreview.style.filter = 'brightness(' + heat + ')';
     }
   }
 
-  function onMouseUp(upEvt) {
-    upEvt.preventDefault();
-
+  function onMouseUp() {
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   }
