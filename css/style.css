@@ -702,12 +702,13 @@ main {
           transform: translateX(-50%);
 
   cursor: move;
+  user-select: none;
 }
 
 .scale__level {
   position: absolute;
 
-  width: 100%;
+  width: 98%;
   height: 100%;
 
   background-color: #ffe753;
