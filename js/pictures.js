@@ -203,7 +203,7 @@ textHashtags.addEventListener('input', function (evt) {
 
 // Оживляет слайдер
 scalePin.addEventListener('mousedown', function () {
-  var scaleWidth = scaleLevel.offsetWidth;
+  var scaleWidth = 453;
   var startCoords = scaleLevel.getBoundingClientRect().left;
 
   function onMouseMove(evt) {
