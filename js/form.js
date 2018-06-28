@@ -2,8 +2,11 @@
 
 (function () {
 
+  var form = document.querySelector('.img-upload__form');
   var textHashtags = document.querySelector('.text__hashtags');
+  var uploadOverlay = document.querySelector('.img-upload__overlay');
 
+  // Проверка валидности хештагов
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
@@ -25,6 +28,30 @@
         target.setCustomValidity('');
       }
     }
+  });
+
+  // Форма отправки фото
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    function successHandler() {
+      uploadOverlay.classList.add('hidden');
+    }
+
+    function errorHandler(errorMessage) {
+      var node = document.createElement('div');
+
+      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.style.position = 'absolute';
+      node.style.left = 0;
+      node.style.right = 0;
+      node.style.fontSize = '30px';
+
+      node.textContent = errorMessage;
+      document.body.insertAdjacentElement('afterbegin', node);
+    }
+
+    window.save(form, successHandler, errorHandler);
   });
 
 })();

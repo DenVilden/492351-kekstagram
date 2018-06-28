@@ -4,10 +4,12 @@
 
   var pictures = document.querySelector('.pictures');
 
+
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadPreview = pictures.querySelector('.img-upload__preview');
   var uploadCancel = pictures.querySelector('.img-upload__cancel');
+
 
   var resizePlus = pictures.querySelector('.resize__control--plus');
   var resizeMinus = pictures.querySelector('.resize__control--minus');
