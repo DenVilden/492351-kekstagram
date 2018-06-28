@@ -7,5 +7,15 @@
   "dontLoad": [
     "node_modules/**"
   ],
-  "plugins": {}
+  "plugins": {
+    "doc_comment": {
+      "fullDocs": true,
+      "strong": false
+    },
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    }
+  }
 }
