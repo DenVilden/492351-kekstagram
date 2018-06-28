@@ -26,6 +26,7 @@
   function clonePhoto(arr) {
     picture.querySelector('.picture__img').src = arr.url;
     picture.querySelector('.picture__stat--likes').textContent = arr.likes;
+    picture.querySelector('.picture__stat--comments').textContent = (arr.comments).length;
 
     bigPicture.querySelector('.big-picture__img').src = arr.url;
     bigPicture.querySelector('.likes-count').textContent = arr.likes;
