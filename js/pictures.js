@@ -38,6 +38,7 @@ var photoEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 var textHashtags = picturesList.querySelector('.text__hashtags');
 var scalePin = picturesList.querySelector('.scale__pin');
 var scaleLevel = picturesList.querySelector('.scale__level');
+var scaleValue = picturesList.querySelector('.scale__value');
 
 // Генерирует случаный элемент массива
 function getRandomItem(arr) {
@@ -159,7 +160,7 @@ function removeEffectsClass() {
   uploadPreview.removeAttribute('style');
   scaleLevel.removeAttribute('style');
   scalePin.removeAttribute('style');
-  picturesList.querySelector('.scale__value').value = 100;
+  scaleValue.value = 100;
   uploadPreview.classList.add('img-upload__preview');
 }
 
@@ -171,6 +172,11 @@ function listenEffectsButton() {
 
     obj.addEventListener('click', (function (str) {
       return function () {
+        if (str === 'none') {
+          picturesList.querySelector('.img-upload__scale').classList.add('hidden');
+        } else {
+          picturesList.querySelector('.img-upload__scale').classList.remove('hidden');
+        }
         removeEffectsClass();
         uploadPreview.classList.add('effects__preview--' + str);
       };
@@ -203,36 +209,27 @@ textHashtags.addEventListener('input', function (evt) {
   }
 });
 
+var sliderChange = new Event('change');
+
 // Оживляет слайдер
 scalePin.addEventListener('mousedown', function () {
   var scaleWidth = 453;
   var startCoords = scaleLevel.getBoundingClientRect().left;
 
   function onMouseMove(evt) {
-    var moveCoords = parseInt(((evt.clientX - startCoords) / scaleWidth * 100).toFixed(2), 10); // Координаты в %
+    // Расчет координат в процентах
+    var moveCoords = parseInt(((evt.clientX - startCoords) / scaleWidth * 100).toFixed(2), 10);
     moveCoords = (moveCoords > 100) ? 100 : moveCoords;
     moveCoords = (moveCoords < 0) ? 0 : moveCoords;
     scalePin.style.left = moveCoords + '%';
-    scaleLevel.style.width = (moveCoords) + '%';
-    picturesList.querySelector('.scale__value').value = moveCoords;
+    scaleLevel.style.width = moveCoords + '%';
+    scaleValue.value = moveCoords;
 
-    // Хром
-    if (uploadPreview.classList.contains('effects__preview--chrome')) {
-      uploadPreview.style.filter = 'grayscale(' + moveCoords / 100 + ')';
-    // Сепия
-    } else if (uploadPreview.classList.contains('effects__preview--sepia')) {
-      uploadPreview.style.filter = 'sepia(' + moveCoords / 100 + ')';
-    // Марвин
-    } else if (uploadPreview.classList.contains('effects__preview--marvin')) {
-      uploadPreview.style.filter = 'invert(' + moveCoords + '%' + ')';
-    // Фобос
-    } else if (uploadPreview.classList.contains('effects__preview--phobos')) {
-      uploadPreview.style.filter = 'blur(' + 5 * moveCoords / 100 + 'px' + ')';
-    // Хит
-    } else if (uploadPreview.classList.contains('effects__preview--heat')) {
-      var heat = (3 * moveCoords / 100) < 1 ? 1 : (3 * moveCoords / 100); // Ограничение до 1 яркости
-      uploadPreview.style.filter = 'brightness(' + heat + ')';
+    // Срабатывание события onChange
+    if (moveCoords >= 0 && moveCoords <= 100) {
+      scalePin.dispatchEvent(sliderChange);
     }
+
   }
 
   function onMouseUp() {
@@ -242,4 +239,23 @@ scalePin.addEventListener('mousedown', function () {
 
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
+});
+
+
+scalePin.addEventListener('change', function () {
+  var value = scaleValue.value;
+
+  var filters = {
+    'chrome': 'grayscale(' + value / 100 + ')',
+    'sepia': 'sepia(' + value / 100 + ')',
+    'marvin': 'invert(' + value + '%' + ')',
+    'phobos': 'blur(' + 5 * value / 100 + 'px' + ')',
+    'heat': 'brightness(' + ((3 * value / 100) < 1 ? 1 : (3 * value / 100)) + ')'
+  };
+
+  for (var effect in filters) {
+    if (uploadPreview.classList.contains('effects__preview--' + effect)) {
+      uploadPreview.style.filter = filters[effect];
+    }
+  }
 });
