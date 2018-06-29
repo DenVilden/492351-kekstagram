@@ -4,41 +4,40 @@
 
   var pictures = document.querySelector('.pictures');
 
-
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadOverlay = pictures.querySelector('.img-upload__overlay');
-  var uploadPreview = pictures.querySelector('.img-upload__preview');
-  var uploadCancel = pictures.querySelector('.img-upload__cancel');
+  var uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
+  var uploadCancel = uploadOverlay.querySelector('.img-upload__cancel');
+  var uploadScale = uploadOverlay.querySelector('.img-upload__scale');
 
+  var resizePlus = uploadOverlay.querySelector('.resize__control--plus');
+  var resizeMinus = uploadOverlay.querySelector('.resize__control--minus');
 
-  var resizePlus = pictures.querySelector('.resize__control--plus');
-  var resizeMinus = pictures.querySelector('.resize__control--minus');
-
-  var scalePin = document.querySelector('.scale__pin');
-  var scaleLevel = document.querySelector('.scale__level');
-  var scaleValue = document.querySelector('.scale__value');
+  var scalePin = uploadOverlay.querySelector('.scale__pin');
+  var scaleLevel = uploadOverlay.querySelector('.scale__level');
+  var scaleValue = uploadOverlay.querySelector('.scale__value');
 
   // Проверка на нажатие ESC
-  function onPopupEscPress(evt) {
-    window.util.isEscEvent(evt, closeFilter);
+  function photoEscPressHandler(evt) {
+    window.util.isEscEvent(evt, uploadCloseHandler);
   }
 
   // Добавляет фото в фильтр
-  function uploadPhoto() {
+  function uploadHandler() {
     uploadOverlay.classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('keydown', photoEscPressHandler);
   }
-  uploadFile.addEventListener('change', uploadPhoto);
+  uploadFile.addEventListener('change', uploadHandler);
 
   // Закрывает фильтр
-  function closeFilter() {
+  function uploadCloseHandler() {
     uploadOverlay.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener('keydown', photoEscPressHandler);
   }
-  uploadCancel.addEventListener('click', closeFilter);
+  uploadCancel.addEventListener('click', uploadCloseHandler);
 
   // Увеличивает масштаб фото на 25%
-  function increaseScale() {
+  function resizeIncreaseHandler() {
     var value = parseInt(pictures.querySelector('.resize__control--value').value, 10);
     var step = 25;
     value = isNaN(value) ? 0 : value + step;
@@ -46,10 +45,10 @@
     pictures.querySelector('.resize__control--value').value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
-  resizePlus.addEventListener('click', increaseScale);
+  resizePlus.addEventListener('click', resizeIncreaseHandler);
 
   // Уменьшает масштаб фото на 25%
-  function decreaseScale() {
+  function resizeDecreaseHandler() {
     var value = parseInt(pictures.querySelector('.resize__control--value').value, 10);
     var step = 25;
     value = isNaN(value) ? 0 : value - step;
@@ -57,10 +56,10 @@
     pictures.querySelector('.resize__control--value').value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
-  resizeMinus.addEventListener('click', decreaseScale);
+  resizeMinus.addEventListener('click', resizeDecreaseHandler);
 
   // Обнуляет эффект фото
-  function removeEffectsClass() {
+  function removePhotoEffect() {
     uploadPreview.removeAttribute('class');
     uploadPreview.removeAttribute('style');
     scaleLevel.removeAttribute('style');
@@ -70,33 +69,33 @@
   }
 
   // Меняет эффект фото по клику
-  function listenEffectsButton() {
-    var photoEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+  function filterChangeHandler() {
+    var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
-    for (var i = 0; i < photoEffects.length; i++) {
-      var name = photoEffects[i];
+    for (var i = 0; i < Effects.length; i++) {
+      var name = Effects[i];
       var obj = pictures.querySelector('#effect-' + name);
 
       obj.addEventListener('click', (function (str) {
         return function () {
           if (str === 'none') {
-            pictures.querySelector('.img-upload__scale').classList.add('hidden');
+            uploadScale.classList.add('hidden');
           } else {
-            pictures.querySelector('.img-upload__scale').classList.remove('hidden');
+            uploadScale.classList.remove('hidden');
           }
-          removeEffectsClass();
+          removePhotoEffect();
           uploadPreview.classList.add('effects__preview--' + str);
         };
       })(name));
     }
   }
-  listenEffectsButton();
+  filterChangeHandler();
 
   // Интенсивность эффекта
-  scalePin.addEventListener('change', function () {
+  function sliderEffectHandler() {
     var value = scaleValue.value;
 
-    var filters = {
+    var Filters = {
       'chrome': 'grayscale(' + value / 100 + ')',
       'sepia': 'sepia(' + value / 100 + ')',
       'marvin': 'invert(' + value + '%' + ')',
@@ -104,11 +103,12 @@
       'heat': 'brightness(' + ((3 * value / 100) < 1 ? 1 : (3 * value / 100)) + ')'
     };
 
-    for (var effect in filters) {
+    for (var effect in Filters) {
       if (uploadPreview.classList.contains('effects__preview--' + effect)) {
-        uploadPreview.style.filter = filters[effect];
+        uploadPreview.style.filter = Filters[effect];
       }
     }
-  });
+  }
+  scalePin.addEventListener('change', sliderEffectHandler);
 
 })();

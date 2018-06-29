@@ -13,8 +13,8 @@
     function onMouseMove(evt) {
       // Расчет координат в процентах
       var moveCoords = parseInt(((evt.clientX - startCoords) / scaleWidth * 100).toFixed(2), 10);
-      moveCoords = (moveCoords > 100) ? 100 : moveCoords;
-      moveCoords = (moveCoords < 0) ? 0 : moveCoords;
+      moveCoords = (moveCoords > 100) ? 100 : moveCoords; // Отсекается больше 100
+      moveCoords = (moveCoords < 0) ? 0 : moveCoords; // Отсекается меньше 0
       scalePin.style.left = moveCoords + '%';
       scaleLevel.style.width = moveCoords + '%';
       scaleValue.value = moveCoords;

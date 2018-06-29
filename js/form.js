@@ -3,8 +3,9 @@
 (function () {
 
   var form = document.querySelector('.img-upload__form');
-  var textHashtags = document.querySelector('.text__hashtags');
-  var uploadOverlay = document.querySelector('.img-upload__overlay');
+  var uploadOverlay = form.querySelector('.img-upload__overlay');
+  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
+
 
   // Проверка валидности хештагов
   textHashtags.addEventListener('input', function (evt) {
@@ -20,7 +21,7 @@
         target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
       } else if (hashtag.indexOf('#', 2) > 1) {
         target.setCustomValidity('Хэш-теги должны разделяться пробелами');
-      } else if (window.haveDuplicates(split)) {
+      } else if (window.funcs.haveDuplicates(split)) {
         target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
       } else if (split.length > 5) {
         target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');

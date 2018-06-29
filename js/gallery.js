@@ -3,24 +3,26 @@
 (function () {
 
   var pictures = document.querySelector('.pictures');
+
   var bigPicture = document.querySelector('.big-picture');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
   var socialComments = bigPicture.querySelector('.social__comments');
+
   var picture = document.querySelector('#picture')
     .content
     .querySelector('.picture__link');
 
     // Проверка на нажатие ESC
-  function onPopupEscPress(evt) {
-    window.util.isEscEvent(evt, closePreview);
+  function photoEscPressHandler(evt) {
+    window.util.isEscEvent(evt, previewCloseHandler);
   }
 
   // Закрывает превью фото
-  function closePreview() {
+  function previewCloseHandler() {
     bigPicture.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener('keydown', photoEscPressHandler);
   }
-  pictureCancel.addEventListener('click', closePreview);
+  pictureCancel.addEventListener('click', previewCloseHandler);
 
   // Создает объект в DOM
   function clonePhoto(arr) {
@@ -31,8 +33,8 @@
     bigPicture.querySelector('.big-picture__img').src = arr.url;
     bigPicture.querySelector('.likes-count').textContent = arr.likes;
 
-    socialComments.querySelector('.social__picture').src = 'img/avatar-' + window.getRandomNumber(1, 6) + '.svg';
-    socialComments.querySelector('.social__text').textContent = window.getRandomItem(arr.comments);
+    socialComments.querySelector('.social__picture').src = 'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
+    socialComments.querySelector('.social__text').textContent = window.funcs.getRandomItem(arr.comments);
 
     return picture.cloneNode(true);
   }
@@ -47,7 +49,7 @@
 
       clone.addEventListener('click', function () {
         bigPicture.classList.remove('hidden');
-        document.addEventListener('keydown', onPopupEscPress);
+        document.addEventListener('keydown', photoEscPressHandler);
       });
     }
     pictures.appendChild(fragment);
