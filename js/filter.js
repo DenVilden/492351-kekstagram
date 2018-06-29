@@ -12,6 +12,7 @@
 
   var resizePlus = uploadOverlay.querySelector('.resize__control--plus');
   var resizeMinus = uploadOverlay.querySelector('.resize__control--minus');
+  var resizeValue = uploadOverlay.querySelector('.resize__control--value');
 
   var scalePin = uploadOverlay.querySelector('.scale__pin');
   var scaleLevel = uploadOverlay.querySelector('.scale__level');
@@ -38,22 +39,22 @@
 
   // Увеличивает масштаб фото на 25%
   function resizeIncreaseHandler() {
-    var value = parseInt(pictures.querySelector('.resize__control--value').value, 10);
+    var value = parseInt(resizeValue.value, 10); // Берет текущее значение
     var step = 25;
     value = isNaN(value) ? 0 : value + step;
-    value = (value > 100) ? 100 : value;
-    pictures.querySelector('.resize__control--value').value = value + '%';
+    value = (value > 100) ? 100 : value; // Отрезает если больше 100
+    resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
   resizePlus.addEventListener('click', resizeIncreaseHandler);
 
   // Уменьшает масштаб фото на 25%
   function resizeDecreaseHandler() {
-    var value = parseInt(pictures.querySelector('.resize__control--value').value, 10);
+    var value = parseInt(resizeValue.value, 10);
     var step = 25;
     value = isNaN(value) ? 0 : value - step;
     value = (value < 25) ? 25 : value;
-    pictures.querySelector('.resize__control--value').value = value + '%';
+    resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
   resizeMinus.addEventListener('click', resizeDecreaseHandler);
@@ -71,6 +72,7 @@
   // Меняет эффект фото по клику
   function filterChangeHandler() {
     var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+
 
     for (var i = 0; i < Effects.length; i++) {
       var name = Effects[i];
@@ -93,7 +95,7 @@
 
   // Интенсивность эффекта
   function sliderEffectHandler() {
-    var value = scaleValue.value;
+    var value = scaleValue.value; // Берет значение скрытыго инпута
 
     var Filters = {
       'chrome': 'grayscale(' + value / 100 + ')',

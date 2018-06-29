@@ -6,7 +6,6 @@
 
   var bigPicture = document.querySelector('.big-picture');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
-  var socialComments = bigPicture.querySelector('.social__comments');
 
   var picture = document.querySelector('#picture')
     .content
@@ -33,8 +32,8 @@
     bigPicture.querySelector('.big-picture__img').src = arr.url;
     bigPicture.querySelector('.likes-count').textContent = arr.likes;
 
-    socialComments.querySelector('.social__picture').src = 'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
-    socialComments.querySelector('.social__text').textContent = window.funcs.getRandomItem(arr.comments);
+    bigPicture.querySelector('.social__picture').src = 'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
+    bigPicture.querySelector('.social__text').textContent = window.funcs.getRandomItem(arr.comments);
 
     return picture.cloneNode(true);
   }
