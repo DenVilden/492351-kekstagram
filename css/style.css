@@ -269,14 +269,14 @@ main {
   width: 20px;
   height: 16px;
 
-  background-position: 0 -53px;
+  background-position: 0 36%;
 }
 
 .picture__stat--likes::before {
   width: 20px;
   height: 16px;
 
-  background-position: 0 -80px;
+  background-position: 0 55%;
 }
 
 
@@ -853,6 +853,8 @@ main {
   color: #000000;
 
   border-radius: 5px;
+
+  resize: none;
 }
 
 
@@ -979,7 +981,7 @@ main {
 .social__likes {
   margin: 0;
   margin-left: auto;
-  min-width: 125px;
+  min-width: 145px;
 }
 
 .likes-count {
@@ -999,7 +1001,7 @@ main {
   content: "";
   position: absolute;
 
-  top: 3px;
+  top: 0;
   left: 5px;
 
   width: 20px;
@@ -1008,7 +1010,7 @@ main {
   background-image: url("../img/sprite.svg");
   background-size: 100%;
 
-  background-position: 0 -150px;
+  background-position: 0 91%;
   opacity: 0.5;
 }
 
@@ -1019,7 +1021,7 @@ main {
 
 .likes-count:active::before {
   opacity: 1;
-  background-position: 0 -120px;
+  background-position: 0 73%;
 }
 
 .social__comments {
