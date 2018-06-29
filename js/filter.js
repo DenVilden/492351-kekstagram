@@ -73,7 +73,6 @@
   function filterChangeHandler() {
     var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
-
     for (var i = 0; i < Effects.length; i++) {
       var name = Effects[i];
       var obj = pictures.querySelector('#effect-' + name);
