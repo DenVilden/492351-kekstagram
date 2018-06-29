@@ -2,10 +2,10 @@
 
 (function () {
 
-  var form = document.querySelector('.img-upload__form');
-  var uploadOverlay = form.querySelector('.img-upload__overlay');
-  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
+  var uploadForm = document.querySelector('.img-upload__form');
+  var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 
+  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
 
   // Проверка валидности хештагов
   textHashtags.addEventListener('input', function (evt) {
@@ -32,7 +32,7 @@
   });
 
   // Форма отправки фото
-  form.addEventListener('submit', function (evt) {
+  uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
     function successHandler() {
@@ -52,7 +52,7 @@
       document.body.insertAdjacentElement('afterbegin', node);
     }
 
-    window.save(form, successHandler, errorHandler);
+    window.save(uploadForm, successHandler, errorHandler);
   });
 
 })();

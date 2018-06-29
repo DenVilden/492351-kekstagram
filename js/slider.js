@@ -10,7 +10,7 @@
     var scaleWidth = 453;
     var startCoords = scaleLevel.getBoundingClientRect().left;
 
-    function onMouseMove(evt) {
+    function mouseMoveHandler(evt) {
       // Расчет координат в процентах
       var moveCoords = parseInt(((evt.clientX - startCoords) / scaleWidth * 100).toFixed(2), 10);
       moveCoords = (moveCoords > 100) ? 100 : moveCoords; // Отсекается больше 100
@@ -23,7 +23,7 @@
       scalePin.dispatchEvent(new Event('change'));
     }
 
-    function onMouseUp() {
+    function mouseUpHandler() {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     }
