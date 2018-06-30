@@ -52,7 +52,7 @@
       document.body.insertAdjacentElement('afterbegin', node);
     }
 
-    window.save(uploadForm, successHandler, errorHandler);
+    window.save(successHandler, errorHandler, uploadForm);
   });
 
 })();
