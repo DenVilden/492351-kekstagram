@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var pictures = document.querySelector('.pictures');
 
   var uploadFile = pictures.querySelector('#upload-file');
@@ -42,7 +41,7 @@
     var value = parseInt(resizeValue.value, 10); // Берет текущее значение
     var step = 25;
     value = isNaN(value) ? 0 : value + step;
-    value = (value > 100) ? 100 : value; // Отрезает если больше 100
+    value = value > 100 ? 100 : value; // Отрезает если больше 100
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
@@ -53,7 +52,7 @@
     var value = parseInt(resizeValue.value, 10);
     var step = 25;
     value = isNaN(value) ? 0 : value - step;
-    value = (value < 25) ? 25 : value;
+    value = value < 25 ? 25 : value;
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
@@ -77,17 +76,20 @@
       var name = Effects[i];
       var obj = pictures.querySelector('#effect-' + name);
 
-      obj.addEventListener('click', (function (str) {
-        return function () {
-          if (str === 'none') {
-            uploadScale.classList.add('hidden');
-          } else {
-            uploadScale.classList.remove('hidden');
-          }
-          removePhotoEffect();
-          uploadPreview.classList.add('effects__preview--' + str);
-        };
-      })(name));
+      obj.addEventListener(
+          'click',
+          (function (str) {
+            return function () {
+              if (str === 'none') {
+                uploadScale.classList.add('hidden');
+              } else {
+                uploadScale.classList.remove('hidden');
+              }
+              removePhotoEffect();
+              uploadPreview.classList.add('effects__preview--' + str);
+            };
+          })(name)
+      );
     }
   }
   filterChangeHandler();
@@ -97,11 +99,12 @@
     var value = scaleValue.value; // Берет значение скрытыго инпута
 
     var Filters = {
-      'chrome': 'grayscale(' + value / 100 + ')',
-      'sepia': 'sepia(' + value / 100 + ')',
-      'marvin': 'invert(' + value + '%' + ')',
-      'phobos': 'blur(' + 5 * value / 100 + 'px' + ')',
-      'heat': 'brightness(' + ((3 * value / 100) < 1 ? 1 : (3 * value / 100)) + ')'
+      chrome: 'grayscale(' + value / 100 + ')',
+      sepia: 'sepia(' + value / 100 + ')',
+      marvin: 'invert(' + value + '%' + ')',
+      phobos: 'blur(' + (5 * value) / 100 + 'px' + ')',
+      heat:
+        'brightness(' + ((3 * value) / 100 < 1 ? 1 : (3 * value) / 100) + ')'
     };
 
     for (var effect in Filters) {
@@ -111,5 +114,4 @@
     }
   }
   scalePin.addEventListener('change', sliderEffectHandler);
-
 })();

@@ -1,7 +1,6 @@
 'use strict';
 
 window.ajax = (function () {
-
   return {
     getResponse: function (onSuccess, onError, method, url, data) {
       var xhr = new XMLHttpRequest();
@@ -27,5 +26,4 @@ window.ajax = (function () {
       xhr.send(new FormData(data));
     }
   };
-
-}());
+})();

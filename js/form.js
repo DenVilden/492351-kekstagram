@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
 
@@ -16,13 +15,19 @@
       var hashtag = split[i];
 
       if (hashtag.indexOf('#') !== 0) {
-        target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+        target.setCustomValidity(
+            'Хэш-тег должен начинаться с символа # (решётка)'
+        );
       } else if (hashtag.length < 2) {
-        target.setCustomValidity('Хэш-тег не может состоять только из одной решётки');
+        target.setCustomValidity(
+            'Хэш-тег не может состоять только из одной решётки'
+        );
       } else if (hashtag.indexOf('#', 2) > 1) {
         target.setCustomValidity('Хэш-теги должны разделяться пробелами');
       } else if (window.funcs.haveDuplicates(split)) {
-        target.setCustomValidity('Один и тот же хэш-тег не может быть использован дважды');
+        target.setCustomValidity(
+            'Один и тот же хэш-тег не может быть использован дважды'
+        );
       } else if (split.length > 5) {
         target.setCustomValidity('Нельзя указать больше пяти хэш-тегов');
       } else {
@@ -42,7 +47,8 @@
     function errorHandler(errorMessage) {
       var node = document.createElement('div');
 
-      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+      node.style =
+        'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
       node.style.position = 'absolute';
       node.style.left = 0;
       node.style.right = 0;
@@ -54,5 +60,4 @@
 
     window.save(successHandler, errorHandler, uploadForm);
   });
-
 })();

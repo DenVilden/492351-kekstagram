@@ -1,7 +1,6 @@
 'use strict';
 
 window.funcs = (function () {
-
   return {
     getRandomItem: function (arr) {
       return arr[Math.floor(Math.random() * arr.length)];
@@ -24,5 +23,4 @@ window.funcs = (function () {
       return false;
     }
   };
-
 })();
