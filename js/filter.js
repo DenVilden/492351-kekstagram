@@ -59,14 +59,14 @@
   resizeMinus.addEventListener('click', resizeDecreaseHandler);
 
   // Обнуляет эффект фото
-  function removePhotoEffect() {
+  window.removePhotoEffect = function () {
     uploadPreview.removeAttribute('class');
     uploadPreview.removeAttribute('style');
     scaleLevel.removeAttribute('style');
     scalePin.removeAttribute('style');
-    scaleValue.value = 100;
+    scaleValue.value = '';
     uploadPreview.classList.add('img-upload__preview');
-  }
+  };
 
   // Меняет эффект фото по клику
   function filterChangeHandler() {
@@ -85,7 +85,7 @@
               } else {
                 uploadScale.classList.remove('hidden');
               }
-              removePhotoEffect();
+              window.removePhotoEffect();
               uploadPreview.classList.add('effects__preview--' + str);
             };
           })(name)

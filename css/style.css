@@ -841,6 +841,11 @@ main {
   border-radius: 5px;
 }
 
+.text__hashtags:invalid {
+  border-color: red;
+  outline: none
+}
+
 .text__description {
   width: 450px;
   height: 100px;

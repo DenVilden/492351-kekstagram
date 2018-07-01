@@ -5,9 +5,7 @@
   var bigPicture = document.querySelector('.big-picture');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
 
-  var picture = document
-    .querySelector('#picture')
-    .content.querySelector('.picture__link');
+  var picture = document.querySelector('#picture').content;
 
   // Проверка на нажатие ESC
   function photoEscPressHandler(evt) {
@@ -17,6 +15,7 @@
   // Закрывает превью фото
   function previewCloseHandler() {
     bigPicture.classList.add('hidden');
+    document.body.removeAttribute('class');
     document.removeEventListener('keydown', photoEscPressHandler);
   }
   pictureCancel.addEventListener('click', previewCloseHandler);
@@ -49,14 +48,16 @@
    * @param  {[type]} photos
    */
   function generatePhoto(photos) {
-    var fragment = document.createDocumentFragment();
+    var keepo = document.createDocumentFragment();
+    var fragment = document.importNode(keepo, true);
 
-    for (var i = 0; i < 25; i++) {
+    for (var i = 0; i < photos.length; i++) {
       var clone = clonePhoto(photos[i]);
       fragment.appendChild(clone);
 
       clone.addEventListener('click', function () {
         bigPicture.classList.remove('hidden');
+        document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);
       });
     }

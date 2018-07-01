@@ -1,11 +1,15 @@
 'use strict';
 
 (function () {
+  var picture = document.querySelector('#picture').content;
+
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
+  var uploadScale = uploadOverlay.querySelector('.img-upload__scale');
 
-  //
+  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
+  var textDescription = uploadOverlay.querySelector('.text__description');
+
   /**
    * Проверка валидности хештагов
    * @param  {[type]} evt
@@ -14,6 +18,7 @@
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
+
 
     for (var i = 0; i < split.length; i++) {
       var hashtag = split[i];
@@ -40,7 +45,6 @@
     }
   });
 
-  //
   /**
    * Форма отправки фото
    * @param  {[type]} evt
@@ -51,20 +55,17 @@
 
     function successHandler() {
       uploadOverlay.classList.add('hidden');
+      window.removePhotoEffect();
+      textDescription.value = '';
+      textHashtags.value = '';
+      uploadScale.classList.add('hidden');
+      uploadOverlay.querySelector('#effect-none').checked = true;
     }
 
-    function errorHandler(errorMessage) {
-      var node = document.createElement('div');
-
-      node.style =
-        'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-      node.style.position = 'absolute';
-      node.style.left = 0;
-      node.style.right = 0;
-      node.style.fontSize = '30px';
-
-      node.textContent = errorMessage;
-      document.body.insertAdjacentElement('afterbegin', node);
+    function errorHandler() {
+      picture
+        .querySelector('.img-upload__message--error')
+        .classList.remove('hidden');
     }
 
     window.save(successHandler, errorHandler, uploadForm);
