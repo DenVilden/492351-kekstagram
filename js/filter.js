@@ -27,6 +27,7 @@
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', photoEscPressHandler);
   }
+
   uploadFile.addEventListener('change', uploadHandler);
 
   // Закрывает фильтр
@@ -34,6 +35,7 @@
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', photoEscPressHandler);
   }
+
   uploadCancel.addEventListener('click', uploadCloseHandler);
 
   // Увеличивает масштаб фото на 25%
@@ -45,6 +47,7 @@
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
+
   resizePlus.addEventListener('click', resizeIncreaseHandler);
 
   // Уменьшает масштаб фото на 25%
@@ -56,6 +59,7 @@
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
+
   resizeMinus.addEventListener('click', resizeDecreaseHandler);
 
   // Обнуляет эффект фото
@@ -92,6 +96,7 @@
       );
     }
   }
+
   filterChangeHandler();
 
   // Интенсивность эффекта
@@ -113,5 +118,6 @@
       }
     }
   }
+
   scalePin.addEventListener('change', sliderEffectHandler);
 })();

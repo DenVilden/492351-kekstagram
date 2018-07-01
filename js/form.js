@@ -1,7 +1,9 @@
 'use strict';
 
 (function () {
-  var picture = document.querySelector('#picture').content;
+  var picture = document
+    .querySelector('#picture')
+    .content.querySelector('.picture__wrapper');
 
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
@@ -18,7 +20,6 @@
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
-
 
     for (var i = 0; i < split.length; i++) {
       var hashtag = split[i];

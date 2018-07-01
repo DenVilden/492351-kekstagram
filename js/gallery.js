@@ -1,11 +1,13 @@
 'use strict';
 
 (function () {
+  var picture = document
+    .querySelector('#picture')
+    .content.querySelector('.picture__wrapper');
+
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
-
-  var picture = document.querySelector('#picture').content;
 
   // Проверка на нажатие ESC
   function photoEscPressHandler(evt) {
@@ -18,6 +20,7 @@
     document.body.removeAttribute('class');
     document.removeEventListener('keydown', photoEscPressHandler);
   }
+
   pictureCancel.addEventListener('click', previewCloseHandler);
 
   /**
