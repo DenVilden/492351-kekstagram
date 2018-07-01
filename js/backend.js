@@ -2,16 +2,16 @@
 
 (function () {
   // Получение запроса
-  window.load = function (onSuccess, onError) {
+  window.load = function (success, error) {
     var URL = 'https://js.dump.academy/kekstagram/data';
 
-    window.ajax.getResponse(onSuccess, onError, 'GET', URL);
+    window.ajax.getResponse(success, error, 'GET', URL);
   };
 
   // Отправка запроса
-  window.save = function (onSuccess, onError, data) {
+  window.save = function (success, error, data) {
     var URL = 'https://js.dump.academy/kekstagram';
 
-    window.ajax.getResponse(onSuccess, onError, 'POST', URL, data);
+    window.ajax.getResponse(success, error, 'POST', URL, data);
   };
 })();

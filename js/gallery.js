@@ -2,7 +2,6 @@
 
 (function () {
   var pictures = document.querySelector('.pictures');
-
   var bigPicture = document.querySelector('.big-picture');
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
 
@@ -22,7 +21,11 @@
   }
   pictureCancel.addEventListener('click', previewCloseHandler);
 
-  // Создает объект в DOM
+  /**
+   * Создает объект в DOM
+   * @param  {[type]} arr
+   * @return {[type]}
+   */
   function clonePhoto(arr) {
     picture.querySelector('.picture__img').src = arr.url;
     picture.querySelector('.picture__stat--likes').textContent = arr.likes;
@@ -41,7 +44,10 @@
     return picture.cloneNode(true);
   }
 
-  // Получает фото с сервера
+  /**
+   * Получает фото с сервера
+   * @param  {[type]} photos
+   */
   function generatePhoto(photos) {
     var fragment = document.createDocumentFragment();
 

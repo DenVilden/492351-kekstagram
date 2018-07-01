@@ -10,11 +10,10 @@
     var startCoords = scaleLevel.getBoundingClientRect().left;
 
     function mouseMoveHandler(evt) {
-      // Расчет координат в процентах
-      var moveCoords = parseInt(
-          (((evt.clientX - startCoords) / scaleWidth) * 100).toFixed(2),
-          10
-      );
+      var moveCoords = (
+        ((evt.clientX - startCoords) / scaleWidth) *
+        100
+      ).toFixed(2); // Расчет координат в процентах
       moveCoords = moveCoords > 100 ? 100 : moveCoords; // Отсекается больше 100
       moveCoords = moveCoords < 0 ? 0 : moveCoords;
       scalePin.style.left = moveCoords + '%';

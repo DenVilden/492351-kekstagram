@@ -96,7 +96,7 @@
 
   // Интенсивность эффекта
   function sliderEffectHandler() {
-    var value = scaleValue.value; // Берет значение скрытыго инпута
+    var value = scaleValue.value; // Значение скрытого input
 
     var Filters = {
       chrome: 'grayscale(' + value / 100 + ')',

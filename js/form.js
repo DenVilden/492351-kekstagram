@@ -3,10 +3,14 @@
 (function () {
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-
   var textHashtags = uploadOverlay.querySelector('.text__hashtags');
 
-  // Проверка валидности хештагов
+  //
+  /**
+   * Проверка валидности хештагов
+   * @param  {[type]} evt
+   * @return {[type]}
+   */
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
@@ -36,7 +40,12 @@
     }
   });
 
-  // Форма отправки фото
+  //
+  /**
+   * Форма отправки фото
+   * @param  {[type]} evt
+   * @return {[type]}
+   */
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
