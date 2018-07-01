@@ -48,8 +48,7 @@
    * @param  {[type]} photos
    */
   function generatePhoto(photos) {
-    var keepo = document.createDocumentFragment();
-    var fragment = document.importNode(keepo, true);
+    var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < photos.length; i++) {
       var clone = clonePhoto(photos[i]);
