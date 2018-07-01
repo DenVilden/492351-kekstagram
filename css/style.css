@@ -842,8 +842,7 @@ main {
 }
 
 .text__hashtags:invalid {
-  border-color: red;
-  outline: none
+  outline-color: red;
 }
 
 .text__description {
