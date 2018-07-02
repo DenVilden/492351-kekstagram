@@ -76,22 +76,22 @@
   function filterChangeHandler() {
     var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
-    Effects.forEach(function (elm) {
-      var obj = pictures.querySelector('#effect-' + elm);
+    Effects.forEach(function (name) {
+      var obj = pictures.querySelector('#effect-' + name);
 
       obj.addEventListener(
           'click',
-          (function (str) {
+          (function (effect) {
             return function () {
-              if (str === 'none') {
+              if (effect === 'none') {
                 uploadScale.classList.add('hidden');
               } else {
                 uploadScale.classList.remove('hidden');
               }
               window.removePhotoEffect();
-              uploadPreview.classList.add('effects__preview--' + str);
+              uploadPreview.classList.add('effects__preview--' + effect);
             };
-          })(elm)
+          })(name)
       );
     });
   }

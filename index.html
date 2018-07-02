@@ -136,18 +136,18 @@
             <p class="social__caption">Тестим новую камеру! =)</p>
             <p class="social__likes">Нравится <span class="likes-count">356</span></p>
           </div>
-          <div class="social__comment-count visually-hidden">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
               <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
             </li>
-            <li class="social__comment">
+            <!-- <li class="social__comment">
               <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
                <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
+            </li> -->
           </ul>
-          <button class="social__loadmore hidden" type="button">Загрузить еще</button>
+          <button class="social__loadmore" type="button">Загрузить еще</button>
           <div class="social__footer">
             <img class="social__picture" src="img/avatar-6.svg" alt="Аватар комментатора фотографии" width="35" height="35">
             <input type="text" class="social__footer-text" placeholder="Ваш комментарий...">
@@ -185,7 +185,6 @@
   </footer>
 
   <template id="picture">
-    <div class="picture__wrapper">
       <a href="#" class="picture__link">
         <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
         <p class="picture__stats">
@@ -206,7 +205,6 @@
           <a class="error__link" href="#">Загрузить другой файл</a>
         </div>
       </div>
-    </div>
   </template>
 
 <script src="js/utilities/funcs.js"></script>
@@ -215,9 +213,10 @@
 <script src="js/ajax.js"></script>
 <script src="js/backend.js"></script>
 
+<script src="js/slider.js"></script>
 <script src="js/gallery.js"></script>
 <script src="js/filter.js"></script>
 <script src="js/form.js"></script>
-<script src="js/slider.js"></script>
+<script src="js/preview.js"></script>
 </body>
 </html>

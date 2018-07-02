@@ -1,10 +1,6 @@
 'use strict';
 
 (function () {
-  var picture = document
-    .querySelector('#picture')
-    .content.querySelector('.picture__wrapper');
-
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
   var uploadScale = uploadOverlay.querySelector('.img-upload__scale');
@@ -21,16 +17,16 @@
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
 
-    split.forEach(function (elm) {
-      if (elm.indexOf('#') !== 0) {
+    split.forEach(function (hashtag) {
+      if (hashtag.indexOf('#') !== 0) {
         target.setCustomValidity(
             'Хэш-тег должен начинаться с символа # (решётка)'
         );
-      } else if (elm.length < 2) {
+      } else if (hashtag.length < 2) {
         target.setCustomValidity(
             'Хэш-тег не может состоять только из одной решётки'
         );
-      } else if (elm.indexOf('#', 2) > 1) {
+      } else if (hashtag.indexOf('#', 2) > 1) {
         target.setCustomValidity('Хэш-теги должны разделяться пробелами');
       } else if (window.funcs.haveDuplicates(split)) {
         target.setCustomValidity(
@@ -62,9 +58,7 @@
     }
 
     function errorHandler() {
-      picture
-        .querySelector('.img-upload__message--error')
-        .classList.remove('hidden');
+      //
     }
 
     window.save(successHandler, errorHandler, uploadForm);

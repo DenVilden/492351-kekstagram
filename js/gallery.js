@@ -3,7 +3,7 @@
 (function () {
   var picture = document
     .querySelector('#picture')
-    .content.querySelector('.picture__wrapper');
+    .content.querySelector('.picture__link');
 
   var pictures = document.querySelector('.pictures');
   var bigPicture = document.querySelector('.big-picture');
@@ -34,15 +34,6 @@
     picture.querySelector('.picture__stat--comments').textContent =
       arr.comments.length;
 
-    bigPicture.querySelector('.big-picture__img').src = arr.url;
-    bigPicture.querySelector('.likes-count').textContent = arr.likes;
-
-    bigPicture.querySelector('.social__picture').src =
-      'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
-    bigPicture.querySelector(
-        '.social__text'
-    ).textContent = window.funcs.getRandomItem(arr.comments);
-
     return picture.cloneNode(true);
   }
 
@@ -53,8 +44,8 @@
   function generatePhoto(photos) {
     var fragment = document.createDocumentFragment();
 
-    photos.forEach(function (elm) {
-      var clone = clonePhoto(elm);
+    photos.forEach(function (photo) {
+      var clone = clonePhoto(photo);
       fragment.appendChild(clone);
 
       clone.addEventListener('click', function () {
