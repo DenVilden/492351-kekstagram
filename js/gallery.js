@@ -53,8 +53,8 @@
   function generatePhoto(photos) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < photos.length; i++) {
-      var clone = clonePhoto(photos[i]);
+    photos.forEach(function (elm) {
+      var clone = clonePhoto(elm);
       fragment.appendChild(clone);
 
       clone.addEventListener('click', function () {
@@ -62,7 +62,7 @@
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);
       });
-    }
+    });
     pictures.appendChild(fragment);
   }
 

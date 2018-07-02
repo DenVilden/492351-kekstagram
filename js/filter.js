@@ -76,9 +76,8 @@
   function filterChangeHandler() {
     var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
-    for (var i = 0; i < Effects.length; i++) {
-      var name = Effects[i];
-      var obj = pictures.querySelector('#effect-' + name);
+    Effects.forEach(function (elm) {
+      var obj = pictures.querySelector('#effect-' + elm);
 
       obj.addEventListener(
           'click',
@@ -92,9 +91,9 @@
               window.removePhotoEffect();
               uploadPreview.classList.add('effects__preview--' + str);
             };
-          })(name)
+          })(elm)
       );
-    }
+    });
   }
 
   filterChangeHandler();
