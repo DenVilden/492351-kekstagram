@@ -1,12 +1,8 @@
 'use strict';
 
 (function () {
-  var uploadForm = document.querySelector('.img-upload__form');
-  var uploadOverlay = uploadForm.querySelector('.img-upload__overlay');
-  var uploadScale = uploadOverlay.querySelector('.img-upload__scale');
-
+  var uploadOverlay = document.querySelector('.img-upload__overlay');
   var textHashtags = uploadOverlay.querySelector('.text__hashtags');
-  var textDescription = uploadOverlay.querySelector('.text__description');
 
   /**
    * Проверка валидности хештагов
@@ -38,29 +34,5 @@
         target.setCustomValidity('');
       }
     });
-  });
-
-  /**
-   * Форма отправки фото
-   * @param  {[type]} evt
-   * @return {[type]}
-   */
-  uploadForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-
-    function successHandler() {
-      uploadOverlay.classList.add('hidden');
-      window.removePhotoEffect();
-      textDescription.value = '';
-      textHashtags.value = '';
-      uploadScale.classList.add('hidden');
-      uploadOverlay.querySelector('#effect-none').checked = true;
-    }
-
-    function errorHandler() {
-      //
-    }
-
-    window.save(successHandler, errorHandler, uploadForm);
   });
 })();
