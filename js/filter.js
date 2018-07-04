@@ -144,6 +144,7 @@
       pictures.appendChild(error);
     }
 
-    window.save(successHandler, errorHandler, uploadForm);
+    var URL = 'https://js.dump.academy/kekstagram';
+    window.save(URL, uploadForm, successHandler, errorHandler);
   });
 })();

@@ -7,8 +7,7 @@
   };
 
   // Отправка запроса
-  window.save = function (success, error, data) {
-    var URL = 'https://js.dump.academy/kekstagram';
+  window.save = function (URL, data, success, error) {
     window.ajax.getResponse(success, error, 'POST', URL, data);
   };
 })();
