@@ -21,6 +21,7 @@
   var pictureCancel = bigPicture.querySelector('#picture-cancel');
   var socialComments = bigPicture.querySelector('.social__comments');
   var socialComment = template.querySelector('.social__comment');
+  var imgSort = document.querySelector('.img-filters');
 
   // Проверка на нажатие ESC
   function photoEscPressHandler(evt) {
@@ -32,9 +33,7 @@
     bigPicture.classList.add('hidden');
     document.body.removeAttribute('class');
     document.removeEventListener('keydown', photoEscPressHandler);
-    // while (socialComments.hasChildNodes()) {
-    //   socialComments.removeChild(socialComments.lastChild);
-    // }
+    socialComments.textContent = '';
   }
 
   pictureCancel.addEventListener('click', previewCloseHandler);
@@ -53,6 +52,12 @@
     return picture.cloneNode(true);
   }
 
+  /**
+   * Подставляет значения фото в разметку
+   * @param  {[type]} clone
+   * @param  {[type]} arr
+   * @return {[type]}
+   */
   function buildPreview(clone, arr) {
     bigPicture.querySelector('.likes-count').textContent = clone.querySelector(
         '.picture__stat--likes'
@@ -78,31 +83,21 @@
 
   /**
    * Получает фото с сервера
-   * @param  {[type]} photos
+   * @param  {[type]} data
    */
-  function generatePhoto(photos) {
-    var fragment = document.createDocumentFragment();
-
-    photos.forEach(function (photo) {
-      var clone = clonePhoto(photo);
-      fragment.appendChild(clone);
+  window.data = function (data) {
+    data.forEach(function (photo) {
+      var clone = clonePhoto(photo); // Элемент массива
 
       clone.addEventListener('click', function () {
-        for (var i = 0; i < 5; i++) {
-          socialComments.appendChild(buildPreview(clone, photo));
-          if (socialComments.childElementCount >= photo.comments.length) {
-            bigPicture
-              .querySelector('.social__loadmore')
-              .classList.add('hidden');
-          }
-        }
+        buildPreview(clone, photo);
         bigPicture.classList.remove('hidden');
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);
       });
+      pictures.appendChild(clone);
     });
-    pictures.appendChild(fragment);
-  }
 
-  window.load(generatePhoto);
+    imgSort.classList.remove('img-filters--inactive');
+  };
 })();

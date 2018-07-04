@@ -2,8 +2,7 @@
 
 (function () {
   // Получение запроса
-  window.load = function (success, error) {
-    var URL = 'https://js.dump.academy/kekstagram/data';
+  window.load = function (URL, success, error) {
     window.ajax.getResponse(success, error, 'GET', URL);
   };
 
