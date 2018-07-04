@@ -40,8 +40,8 @@
 
   /**
    * Создает объект в DOM
-   * @param  {[type]} arr
-   * @return {[type]}
+   * @param  {Array} arr
+   * @return {Object}
    */
   function clonePhoto(arr) {
     picture.querySelector('.picture__img').src = arr.url;
@@ -54,9 +54,9 @@
 
   /**
    * Подставляет значения фото в разметку
-   * @param  {[type]} clone
-   * @param  {[type]} arr
-   * @return {[type]}
+   * @param  {Object} clone
+   * @param  {Array} arr
+   * @return {Object}
    */
   function buildPreview(clone, arr) {
     bigPicture.querySelector('.likes-count').textContent = clone.querySelector(
@@ -83,12 +83,11 @@
 
   /**
    * Получает фото с сервера
-   * @param  {[type]} data
+   * @param  {Array} data
    */
   window.data = function (data) {
     data.forEach(function (photo) {
       var clone = clonePhoto(photo); // Элемент массива
-
       clone.addEventListener('click', function () {
         buildPreview(clone, photo);
         bigPicture.classList.remove('hidden');

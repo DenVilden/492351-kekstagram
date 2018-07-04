@@ -4,11 +4,7 @@
   var uploadOverlay = document.querySelector('.img-upload__overlay');
   var textHashtags = uploadOverlay.querySelector('.text__hashtags');
 
-  /**
-   * Проверка валидности хештагов
-   * @param  {[type]} evt
-   * @return {[type]}
-   */
+  // Проверка валидности хештагов
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
