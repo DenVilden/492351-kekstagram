@@ -38,11 +38,7 @@
 
   pictureCancel.addEventListener('click', previewCloseHandler);
 
-  /**
-   * Создает объект в DOM
-   * @param  {Array} arr
-   * @return {Object}
-   */
+  // Клонирует блок фото
   function clonePhoto(arr) {
     picture.querySelector('.picture__img').src = arr.url;
     picture.querySelector('.picture__stat--likes').textContent = arr.likes;
@@ -52,12 +48,7 @@
     return picture.cloneNode(true);
   }
 
-  /**
-   * Подставляет значения фото в разметку
-   * @param  {Object} clone
-   * @param  {Array} arr
-   * @return {Object}
-   */
+  // Подставляет значения фото в разметку
   function buildPreview(clone, arr) {
     bigPicture.querySelector('.likes-count').textContent = clone.querySelector(
         '.picture__stat--likes'
@@ -81,15 +72,23 @@
     return socialComment.cloneNode(true);
   }
 
-  /**
-   * Получает фото с сервера
-   * @param  {Array} data
-   */
+  // Удаляет фотки из DOM
+  function clearPhotos() {
+    var photosDOM = document.getElementsByClassName('picture__link');
+    for (var i = photosDOM.length - 1; i >= 0; i--) {
+      photosDOM[i].remove();
+    }
+  }
+
+  // Добавляет фотки в DOM
   window.data = function (data) {
+    clearPhotos();
     data.forEach(function (photo) {
       var clone = clonePhoto(photo); // Элемент массива
       clone.addEventListener('click', function () {
-        buildPreview(clone, photo);
+        for (var i = 0; i < 5; i++) {
+          socialComments.appendChild(buildPreview(clone, photo));
+        }
         bigPicture.classList.remove('hidden');
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);

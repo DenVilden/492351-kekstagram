@@ -1,16 +1,13 @@
 'use strict';
 
 (function () {
-  var template = document.querySelector('#picture').content;
   var pictures = document.querySelector('.pictures');
-  var error = template.querySelector('.img-upload__message--error');
 
   var uploadFile = pictures.querySelector('#upload-file');
   var uploadOverlay = pictures.querySelector('.img-upload__overlay');
   var uploadPreview = uploadOverlay.querySelector('.img-upload__preview');
   var uploadCancel = uploadOverlay.querySelector('.img-upload__cancel');
   var uploadScale = uploadOverlay.querySelector('.img-upload__scale');
-  var uploadForm = pictures.querySelector('.img-upload__form');
 
   var resizePlus = uploadOverlay.querySelector('.resize__control--plus');
   var resizeMinus = uploadOverlay.querySelector('.resize__control--minus');
@@ -19,9 +16,6 @@
   var scalePin = uploadOverlay.querySelector('.scale__pin');
   var scaleLevel = uploadOverlay.querySelector('.scale__level');
   var scaleValue = uploadOverlay.querySelector('.scale__value');
-
-  var textDescription = uploadOverlay.querySelector('.text__description');
-  var textHashtags = uploadOverlay.querySelector('.text__hashtags');
 
   // Проверка на нажатие ESC
   function photoEscPressHandler(evt) {
@@ -69,14 +63,14 @@
   resizeMinus.addEventListener('click', resizeDecreaseHandler);
 
   // Обнуляет эффект фото
-  function removePhotoEffect() {
+  window.removePhotoEffect = function () {
     uploadPreview.removeAttribute('class');
     uploadPreview.removeAttribute('style');
     scaleLevel.removeAttribute('style');
     scalePin.removeAttribute('style');
     scaleValue.value = '';
     uploadPreview.classList.add('img-upload__preview');
-  }
+  };
 
   // Меняет эффект фото по клику
   function filterChangeHandler() {
@@ -94,7 +88,7 @@
               } else {
                 uploadScale.classList.remove('hidden');
               }
-              removePhotoEffect();
+              window.removePhotoEffect();
               uploadPreview.classList.add('effects__preview--' + effect);
             };
           })(name)
@@ -125,26 +119,4 @@
   }
 
   scalePin.addEventListener('change', sliderEffectHandler);
-
-  // Форма отправки фото
-  uploadForm.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    function successHandler() {
-      uploadOverlay.classList.add('hidden');
-      removePhotoEffect();
-      textDescription.value = '';
-      textHashtags.value = '';
-      uploadScale.classList.add('hidden');
-      uploadOverlay.querySelector('#effect-none').checked = true;
-    }
-
-    function errorHandler() {
-      uploadOverlay.classList.add('hidden');
-      error.classList.remove('hidden');
-      pictures.appendChild(error);
-    }
-
-    var URL = 'https://js.dump.academy/kekstagram';
-    window.save(URL, uploadForm, successHandler, errorHandler);
-  });
 })();
