@@ -8,6 +8,14 @@
   var buttonNew = document.querySelector('#filter-new');
   var buttonDiscussed = document.querySelector('#filter-discussed');
 
+  function sortPopularHandler() {
+    window.data(photos);
+  }
+
+  buttonPopular.addEventListener('click', function () {
+    window.debounce(sortPopularHandler);
+  });
+
   function sortNewHandler() {
     window.data(
         photos
@@ -19,7 +27,9 @@
     );
   }
 
-  buttonNew.addEventListener('click', sortNewHandler);
+  buttonNew.addEventListener('click', function () {
+    window.debounce(sortNewHandler);
+  });
 
   function sortDiscussedHandler() {
     window.data(
@@ -29,17 +39,15 @@
     );
   }
 
-  buttonDiscussed.addEventListener('click', sortDiscussedHandler);
+  buttonDiscussed.addEventListener('click', function () {
+    window.debounce(sortDiscussedHandler);
+  });
 
   // Получает массив фото с сервера
   function successHandler(data) {
     photos = data;
     window.data(photos);
   }
-
-  buttonPopular.addEventListener('click', function () {
-    window.data(photos);
-  });
 
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].onclick = toggleClassButtons;
