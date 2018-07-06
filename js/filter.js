@@ -74,9 +74,9 @@
 
   // Меняет эффект фото по клику
   function filterChangeHandler() {
-    var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+    var effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
-    Effects.forEach(function (name) {
+    effects.forEach(function (name) {
       var obj = pictures.querySelector('#effect-' + name); // Скрытый input c эффектами
 
       obj.addEventListener(
@@ -103,7 +103,7 @@
   function sliderEffectHandler() {
     var value = scaleValue.value; // Значение скрытого input
 
-    var Filters = {
+    var filters = {
       chrome: 'grayscale(' + value / 100 + ')',
       sepia: 'sepia(' + value / 100 + ')',
       marvin: 'invert(' + value + '%' + ')',
@@ -111,10 +111,10 @@
       heat:
         'brightness(' + ((3 * value) / 100 < 1 ? 1 : (3 * value) / 100) + ')'
     };
-    // Добавялет фильтр к соответствующему классу
-    for (var effect in Filters) {
+    // Добавляет фильтр к соответствующему классу
+    for (var effect in filters) {
       if (uploadPreview.classList.contains('effects__preview--' + effect)) {
-        uploadPreview.style.filter = Filters[effect];
+        uploadPreview.style.filter = filters[effect];
       }
     }
   }
