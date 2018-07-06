@@ -16,12 +16,13 @@
   textHashtags.addEventListener('input', function (evt) {
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
-
-    split.forEach(function (hashtag) {
+    for (var i = 0; i < split.length; i++) {
+      var hashtag = split[i];
       if (hashtag.indexOf('#') !== 0) {
         target.setCustomValidity(
             'Хэш-тег должен начинаться с символа # (решётка)'
         );
+        break;
       } else if (hashtag.length < 2) {
         target.setCustomValidity(
             'Хэш-тег не может состоять только из одной решётки'
@@ -37,7 +38,7 @@
       } else {
         target.setCustomValidity('');
       }
-    });
+    }
   });
 
   // Форма отправки фото
