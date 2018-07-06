@@ -10,20 +10,16 @@
   var buttonDiscussed = document.querySelector('#filter-discussed');
 
   function activeButtonHandler() {
-    form.addEventListener(
-        'click',
-        function (evt) {
-          if (evt.target.classList.contains('img-filters__button')) {
-          // Удаляет active класс
-            buttons.forEach(function (button) {
-              button.classList.remove('img-filters__button--active');
-            });
-            // Добавляет active класс
-            evt.target.classList.add('img-filters__button--active');
-          }
-        },
-        false
-    );
+    form.addEventListener('click', function (evt) {
+      if (evt.target.classList.contains('img-filters__button')) {
+        // Удаляет active класс
+        buttons.forEach(function (button) {
+          button.classList.remove('img-filters__button--active');
+        });
+        // Добавляет active класс
+        evt.target.classList.add('img-filters__button--active');
+      }
+    });
   }
 
   activeButtonHandler();
