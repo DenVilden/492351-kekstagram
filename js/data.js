@@ -76,7 +76,7 @@
   window.data = function (data) {
     clearPhotos();
     data.forEach(function (photo) {
-      var clone = clonePhoto(photo); // Элемент массива
+      var clone = clonePhoto(photo); // Элемент массива(фотка)
       clone.addEventListener('click', function () {
         for (var i = 0; i < 5; i++) {
           socialComments.appendChild(buildPreview(clone, photo));

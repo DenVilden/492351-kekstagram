@@ -20,7 +20,7 @@ window.ajax = (function () {
         error('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
-      xhr.timeout = 10000; // 10s
+      xhr.timeout = 10000; // 10 сек
 
       xhr.open(method, url);
       xhr.send(new FormData(data));

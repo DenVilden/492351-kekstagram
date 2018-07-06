@@ -28,6 +28,7 @@
 
   activeButtonHandler();
 
+  // Популярные
   function sortPopularHandler() {
     window.data(photos);
   }
@@ -36,6 +37,7 @@
     window.debounce(sortPopularHandler);
   });
 
+  // Новые
   function sortNewHandler() {
     window.data(
         photos
@@ -51,6 +53,7 @@
     window.debounce(sortNewHandler);
   });
 
+  // Обсуждаемые
   function sortDiscussedHandler() {
     window.data(
         photos.slice().sort(function (left, right) {

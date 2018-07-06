@@ -6,8 +6,8 @@
   var scaleValue = document.querySelector('.scale__value');
 
   scalePin.addEventListener('mousedown', function () {
-    var scaleWidth = 453;
-    var startCoords = scaleLevel.getBoundingClientRect().left;
+    var scaleWidth = 453; // Длина слайдера
+    var startCoords = scaleLevel.getBoundingClientRect().left; // Координаты по оси Х при нажатии
 
     function mouseMoveHandler(evt) {
       var moveCoords = (
@@ -21,7 +21,7 @@
       scaleValue.value = moveCoords; // Записывается в скрытый input
 
       // Срабатывание события onChange
-      scalePin.dispatchEvent(new Event('change'));
+      scalePin.dispatchEvent(new Event('slider'));
     }
 
     function mouseUpHandler() {

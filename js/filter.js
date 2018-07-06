@@ -42,8 +42,8 @@
   function resizeIncreaseHandler() {
     var value = parseInt(resizeValue.value, 10); // Берет текущее значение
     var step = 25;
-    value = isNaN(value) ? 0 : value + step;
-    value = value > 100 ? 100 : value; // Отрезает если больше 100
+    value = value + step; // Прибавляет 25 к текущему значению
+    value = value > 100 ? 100 : value; // Ограничение до 100
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
@@ -54,7 +54,7 @@
   function resizeDecreaseHandler() {
     var value = parseInt(resizeValue.value, 10);
     var step = 25;
-    value = isNaN(value) ? 0 : value - step;
+    value = value - step;
     value = value < 25 ? 25 : value;
     resizeValue.value = value + '%';
     uploadPreview.style.transform = 'scale(' + value / 100 + ')';
@@ -77,12 +77,13 @@
     var Effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
     Effects.forEach(function (name) {
-      var obj = pictures.querySelector('#effect-' + name);
+      var obj = pictures.querySelector('#effect-' + name); // Скрытый input c эффектами
 
       obj.addEventListener(
           'click',
           (function (effect) {
             return function () {
+            // Если выбран оригинал - прячем слайдер
               if (effect === 'none') {
                 uploadScale.classList.add('hidden');
               } else {
@@ -110,7 +111,7 @@
       heat:
         'brightness(' + ((3 * value) / 100 < 1 ? 1 : (3 * value) / 100) + ')'
     };
-
+    // Добавялет фильтр к соответствующему классу
     for (var effect in Filters) {
       if (uploadPreview.classList.contains('effects__preview--' + effect)) {
         uploadPreview.style.filter = Filters[effect];
@@ -118,5 +119,5 @@
     }
   }
 
-  scalePin.addEventListener('change', sliderEffectHandler);
+  scalePin.addEventListener('slider', sliderEffectHandler);
 })();

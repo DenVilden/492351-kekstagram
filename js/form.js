@@ -43,6 +43,7 @@
   // Форма отправки фото
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
+
     function successHandler() {
       uploadOverlay.classList.add('hidden');
       window.removePhotoEffect();
