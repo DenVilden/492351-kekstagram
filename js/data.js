@@ -69,13 +69,13 @@
     bigPicture.querySelector(
         '.social__caption'
     ).textContent = window.funcs.getRandomItem(USER_DESCRIPTION);
+
+    bigPicture.querySelector('.social__picture').src =
+      'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
   }
 
   // Загружает комментарии
   function buildComments(arr) {
-    socialComment.querySelector('.social__picture').src =
-      'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
-
     socialComment.querySelector('.social__text').textContent = arr.comments;
 
     return socialComment.cloneNode(true);
