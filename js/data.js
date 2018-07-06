@@ -49,25 +49,25 @@
   }
 
   // Подставляет значения фото в разметку
-  function buildPreview(clone) {
-    bigPicture.querySelector('.likes-count').textContent = clone.querySelector(
+  function buildPreview(target) {
+    bigPicture.querySelector(
+        '.likes-count'
+    ).textContent = target.nextElementSibling.querySelector(
         '.picture__stat--likes'
     ).textContent;
     bigPicture.querySelector(
         '.comments-count'
-    ).textContent = clone.querySelector('.picture__stat--comments').textContent;
-    bigPicture.querySelector('.big-picture__img img').src = clone.querySelector(
-        '.picture__img'
-    ).src;
+    ).textContent = target.nextElementSibling.querySelector(
+        '.picture__stat--comments'
+    ).textContent;
+    bigPicture.querySelector('.big-picture__img img').src = target.src;
   }
 
   // Загружает комментарии
   function buildComments(arr) {
     socialComment.querySelector('.social__picture').src =
       'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
-    socialComment.querySelector(
-        '.social__text'
-    ).textContent = window.funcs.getRandomItem(arr.comments);
+    socialComment.querySelector('.social__text').textContent = arr.comments;
     bigPicture.querySelector(
         '.social__caption'
     ).textContent = window.funcs.getRandomItem(USER_DESCRIPTION);
@@ -80,18 +80,9 @@
     clearPhotos();
     data.forEach(function (photo) {
       var clone = clonePhoto(photo); // Элемент массива(фотка)
-      clone.addEventListener('click', function () {
-        for (var i = 0; i < 5; i++) {
-          socialComments.appendChild(buildComments(photo));
-        }
-        buildPreview(clone);
-        bigPicture.classList.remove('hidden');
-        document.body.classList.add('modal-open');
-        document.addEventListener('keydown', photoEscPressHandler);
-      });
       pictures.appendChild(clone);
     });
-
+    socialComments.appendChild(buildComments(data[0])); // Временно
     imgSort.classList.remove('img-filters--inactive');
   };
 
@@ -102,4 +93,19 @@
       photo.remove();
     });
   }
+
+  // Подставляет значения фото в разметку при клике
+  function buildPreviewHandler() {
+    pictures.addEventListener('click', function (evt) {
+      var target = evt.target;
+      if (target.classList.contains('picture__img')) {
+        bigPicture.classList.remove('hidden');
+        document.body.classList.add('modal-open');
+        document.addEventListener('keydown', photoEscPressHandler);
+        buildPreview(target);
+      }
+    });
+  }
+
+  buildPreviewHandler();
 })();
