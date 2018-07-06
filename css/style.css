@@ -702,7 +702,10 @@ main {
           transform: translateX(-50%);
 
   cursor: move;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   z-index: 1;
 }
 
@@ -841,8 +844,9 @@ main {
   border-radius: 5px;
 }
 
-.text__hashtags:invalid {
-  outline-color: red;
+.text__hashtags:focus:invalid {
+  border: 2px solid red;
+  outline: none;
 }
 
 .text__description {
