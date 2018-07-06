@@ -49,7 +49,7 @@
   }
 
   // Подставляет значения фото в разметку
-  function buildPreview(clone, arr) {
+  function buildPreview(clone) {
     bigPicture.querySelector('.likes-count').textContent = clone.querySelector(
         '.picture__stat--likes'
     ).textContent;
@@ -59,7 +59,10 @@
     bigPicture.querySelector('.big-picture__img img').src = clone.querySelector(
         '.picture__img'
     ).src;
+  }
 
+  // Загружает комментарии
+  function buildComments(arr) {
     socialComment.querySelector('.social__picture').src =
       'img/avatar-' + window.funcs.getRandomNumber(1, 6) + '.svg';
     socialComment.querySelector(
@@ -79,8 +82,9 @@
       var clone = clonePhoto(photo); // Элемент массива(фотка)
       clone.addEventListener('click', function () {
         for (var i = 0; i < 5; i++) {
-          socialComments.appendChild(buildPreview(clone, photo));
+          socialComments.appendChild(buildComments(photo));
         }
+        buildPreview(clone);
         bigPicture.classList.remove('hidden');
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);
