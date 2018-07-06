@@ -72,14 +72,6 @@
     return socialComment.cloneNode(true);
   }
 
-  // Удаляет фотки из DOM
-  function clearPhotos() {
-    var photosDOM = document.getElementsByClassName('picture__link');
-    for (var i = photosDOM.length - 1; i >= 0; i--) {
-      photosDOM[i].remove();
-    }
-  }
-
   // Добавляет фотки в DOM
   window.data = function (data) {
     clearPhotos();
@@ -98,4 +90,12 @@
 
     imgSort.classList.remove('img-filters--inactive');
   };
+
+  // Удаляет фотки из DOM
+  function clearPhotos() {
+    var photosDOM = document.querySelectorAll('.picture__link');
+    photosDOM.forEach(function (photo) {
+      photo.remove();
+    });
+  }
 })();

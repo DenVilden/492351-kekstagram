@@ -3,10 +3,30 @@
 (function () {
   var photos = [];
 
-  var buttons = document.getElementsByClassName('img-filters__button');
+  var buttons = document.querySelectorAll('.img-filters__button');
+  var form = document.querySelector('.img-filters__form');
   var buttonPopular = document.querySelector('#filter-popular');
   var buttonNew = document.querySelector('#filter-new');
   var buttonDiscussed = document.querySelector('#filter-discussed');
+
+  function activeButtonHandler() {
+    form.addEventListener(
+        'click',
+        function (evt) {
+          if (evt.target.classList.contains('img-filters__button')) {
+          // Удаляет active класс
+            buttons.forEach(function (button) {
+              button.classList.remove('img-filters__button--active');
+            });
+            // Добавляет active класс
+            evt.target.classList.add('img-filters__button--active');
+          }
+        },
+        false
+    );
+  }
+
+  activeButtonHandler();
 
   function sortPopularHandler() {
     window.data(photos);
@@ -49,17 +69,5 @@
     window.data(photos);
   }
 
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].onclick = toggleClassButtons;
-  }
-
-  function toggleClassButtons(evt) {
-    var el = evt.target;
-    if (el.className.indexOf('img-filters__button--active') !== -1) {
-      el.className = el.className.replace(' img-filters__button--active', '');
-    } else {
-      el.className += ' img-filters__button--active';
-    }
-  }
   window.load(successHandler);
 })();
