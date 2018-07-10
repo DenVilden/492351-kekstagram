@@ -8,17 +8,21 @@
     var FROM_INDEX = 2;
     var NUMBER_OF_SPACES = 1;
     var MAX_HASHTAGS = 5;
+    var TRUE = 0;
 
     var target = evt.target;
     var split = target.value.split(' '); // Формирует массив из хэштегов
     for (var i = 0; i < split.length; i++) {
       var hashtag = split[i];
-      if (hashtag.length >= MAX_SYMBOLS && hashtag.indexOf('#') !== 0) {
+      if (hashtag.length >= MAX_SYMBOLS && hashtag.indexOf('#') !== TRUE) {
         target.setCustomValidity(
             'Хэш-тег должен начинаться с символа # (решётка)'
         );
         break;
-      } else if (hashtag.length < MIN_SYMBOLS && hashtag.indexOf('#') === 0) {
+      } else if (
+        hashtag.length < MIN_SYMBOLS &&
+        hashtag.indexOf('#') === TRUE
+      ) {
         target.setCustomValidity(
             'Хэш-тег не может состоять только из одной решётки'
         );
