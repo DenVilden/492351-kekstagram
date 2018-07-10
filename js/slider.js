@@ -7,7 +7,7 @@
 
   scalePin.addEventListener('mousedown', function () {
     var scaleWidth = 453; // Длина слайдера
-    var startCoords = scaleLevel.getBoundingClientRect().left; // Координаты по оси Х при нажатии
+    var startCoords = scaleLevel.getBoundingClientRect().left; // Получает координаты по оси Х при нажатии
 
     function mouseMoveHandler(evt) {
       var moveCoords = (
