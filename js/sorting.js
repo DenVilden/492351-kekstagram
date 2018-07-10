@@ -15,8 +15,8 @@
       if (target.classList.contains('img-filters__button')) {
         // Удаляет active класс
         buttons.forEach(function (button) {
-          button.disabled = false;
           button.classList.remove('img-filters__button--active');
+          button.disabled = false;
         });
         // Добавляет active класс
         target.classList.add('img-filters__button--active');
@@ -24,14 +24,12 @@
       }
     });
   }
-
   activeButtonHandler();
 
   // Популярные
   function sortPopularHandler() {
     window.data(photos);
   }
-
   buttonPopular.addEventListener('click', function () {
     window.debounce(sortPopularHandler);
   });
@@ -47,7 +45,6 @@
         .splice(0, 10)
     );
   }
-
   buttonNew.addEventListener('click', function () {
     window.debounce(sortNewHandler);
   });
@@ -60,7 +57,6 @@
         })
     );
   }
-
   buttonDiscussed.addEventListener('click', function () {
     window.debounce(sortDiscussedHandler);
   });

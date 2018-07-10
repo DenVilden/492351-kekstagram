@@ -30,9 +30,8 @@
     bigPicture.classList.add('hidden');
     document.body.removeAttribute('class');
     document.removeEventListener('keydown', photoEscPressHandler);
+    pictureCancel.removeEventListener('click', previewCloseHandler);
   }
-
-  pictureCancel.addEventListener('click', previewCloseHandler);
 
   // Клонирует блок фото
   function clonePhoto(arr) {
@@ -98,10 +97,10 @@
         bigPicture.classList.remove('hidden');
         document.body.classList.add('modal-open');
         document.addEventListener('keydown', photoEscPressHandler);
+        pictureCancel.addEventListener('click', previewCloseHandler);
         buildPreview(target);
       }
     });
   }
-
   buildPreviewHandler();
 })();

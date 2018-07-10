@@ -3,11 +3,13 @@
 (function () {
   window.ajax = {
     getResponse: function (success, error, method, url, data) {
+      var SUCCESS = 200;
+
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
+        if (xhr.status === SUCCESS) {
           success(xhr.response);
         } else {
           error('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
