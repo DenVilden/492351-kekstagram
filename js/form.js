@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
   var effects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
   var error = document
@@ -57,23 +57,23 @@
 
   // Меняет эффект фото по клику
   function filterChangeHandler() {
-    effects.forEach(function (name) {
+    effects.forEach(function(name) {
       var obj = pictures.querySelector('#effect-' + name); // Скрытый input c эффектами
 
       obj.addEventListener(
-          'click',
-          (function (effect) {
-            return function () {
+        'click',
+        (function(effect) {
+          return function() {
             // Если выбран оригинал - прячем слайдер
-              if (effect === 'none') {
-                uploadScale.classList.add('hidden');
-              } else {
-                uploadScale.classList.remove('hidden');
-              }
-              removePhotoEffect();
-              uploadPreview.classList.add('effects__preview--' + effect);
-            };
-          })(name)
+            if (effect === 'none') {
+              uploadScale.classList.add('hidden');
+            } else {
+              uploadScale.classList.remove('hidden');
+            }
+            removePhotoEffect();
+            uploadPreview.classList.add('effects__preview--' + effect);
+          };
+        })(name)
       );
     });
   }
@@ -106,7 +106,7 @@
   // Удаляет EventListener с эффектов фото при закрытии
   function effectsListenerHandler() {
     var effectsRadio = document.querySelectorAll('.effects__radio');
-    effectsRadio.forEach(function (button) {
+    effectsRadio.forEach(function(button) {
       var newElement = button.cloneNode(true);
       button.parentNode.replaceChild(newElement, button);
     });

@@ -1,16 +1,16 @@
 'use strict';
 
-window.funcs = (function () {
+window.funcs = (function() {
   return {
-    getRandomItem: function (arr) {
+    getRandomItem: function(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     },
 
-    getRandomNumber: function (min, max) {
+    getRandomNumber: function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
 
-    haveDuplicates: function (arr) {
+    haveDuplicates: function(arr) {
       var obj = {};
       for (var i = 0; i < arr.length; i++) {
         var lowCase = arr[i].toLowerCase();

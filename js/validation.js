@@ -1,7 +1,7 @@
 'use strict';
 
-(function () {
-  window.hashtagValidation = function (evt) {
+(function() {
+  window.hashtagValidation = function(evt) {
     var MAX_SYMBOLS = 1;
     var MIN_SYMBOLS = 2;
     var MAX_HASHTAG_LENGTH = 20;
@@ -16,7 +16,7 @@
       var hashtag = split[i];
       if (hashtag.length >= MAX_SYMBOLS && hashtag.indexOf('#') !== TRUE) {
         target.setCustomValidity(
-            'Хэш-тег должен начинаться с символа # (решётка)'
+          'Хэш-тег должен начинаться с символа # (решётка)'
         );
         break;
       } else if (
@@ -24,7 +24,7 @@
         hashtag.indexOf('#') === TRUE
       ) {
         target.setCustomValidity(
-            'Хэш-тег не может состоять только из одной решётки'
+          'Хэш-тег не может состоять только из одной решётки'
         );
         break;
       } else if (hashtag.length > MAX_HASHTAG_LENGTH) {
@@ -35,7 +35,7 @@
         break;
       } else if (window.funcs.haveDuplicates(split)) {
         target.setCustomValidity(
-            'Один и тот же хэш-тег не может быть использован дважды'
+          'Один и тот же хэш-тег не может быть использован дважды'
         );
         break;
       } else if (split.length > MAX_HASHTAGS) {

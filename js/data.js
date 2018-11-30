@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
   var USER_DESCRIPTION = [
     'Тестим новую камеру!',
     'Затусили с друзьями на море',
@@ -48,21 +48,21 @@
   // Подставляет значения фото в разметку
   function buildPreview(target) {
     bigPicture.querySelector(
-        '.likes-count'
+      '.likes-count'
     ).textContent = target.nextElementSibling.querySelector(
-        '.picture__stat--likes'
+      '.picture__stat--likes'
     ).textContent;
 
     bigPicture.querySelector(
-        '.comments-count'
+      '.comments-count'
     ).textContent = target.nextElementSibling.querySelector(
-        '.picture__stat--comments'
+      '.picture__stat--comments'
     ).textContent;
 
     bigPicture.querySelector('.big-picture__img img').src = target.src;
 
     bigPicture.querySelector(
-        '.social__caption'
+      '.social__caption'
     ).textContent = window.funcs.getRandomItem(USER_DESCRIPTION);
 
     bigPicture.querySelector('.social__picture').src =
@@ -70,10 +70,10 @@
   }
 
   // Добавляет фотки в DOM
-  window.data = function (data) {
+  window.data = function(data) {
     var fragment = document.createDocumentFragment();
     clearPhotos();
-    data.forEach(function (photo) {
+    data.forEach(function(photo) {
       var clone = clonePhoto(photo); // Элемент массива(фотка)
       fragment.appendChild(clone);
     });
@@ -84,14 +84,14 @@
   // Удаляет фотки из DOM
   function clearPhotos() {
     var photosDOM = document.querySelectorAll('.picture__link');
-    photosDOM.forEach(function (photo) {
+    photosDOM.forEach(function(photo) {
       photo.remove();
     });
   }
 
   // Подставляет значения фото в разметку при клике
   function buildPreviewHandler() {
-    pictures.addEventListener('click', function (evt) {
+    pictures.addEventListener('click', function(evt) {
       var target = evt.target;
       if (target.classList.contains('picture__img')) {
         bigPicture.classList.remove('hidden');

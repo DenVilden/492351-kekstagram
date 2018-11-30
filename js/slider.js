@@ -1,11 +1,11 @@
 'use strict';
 
-(function () {
+(function() {
   var scalePin = document.querySelector('.scale__pin');
   var scaleLevel = document.querySelector('.scale__level');
   var scaleValue = document.querySelector('.scale__value');
 
-  scalePin.addEventListener('mousedown', function () {
+  scalePin.addEventListener('mousedown', function() {
     var scaleWidth = 453; // Длина слайдера
     var startCoords = scaleLevel.getBoundingClientRect().left; // Получает координаты по оси Х при нажатии
 

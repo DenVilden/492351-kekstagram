@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
   var photos = [];
 
   var buttons = document.querySelectorAll('.img-filters__button');
@@ -10,11 +10,11 @@
   var buttonDiscussed = document.querySelector('#filter-discussed');
 
   function activeButtonHandler() {
-    form.addEventListener('click', function (evt) {
+    form.addEventListener('click', function(evt) {
       var target = evt.target;
       if (target.classList.contains('img-filters__button')) {
         // Удаляет active класс
-        buttons.forEach(function (button) {
+        buttons.forEach(function(button) {
           button.classList.remove('img-filters__button--active');
           button.disabled = false;
         });
@@ -30,34 +30,34 @@
   function sortPopularHandler() {
     window.data(photos);
   }
-  buttonPopular.addEventListener('click', function () {
+  buttonPopular.addEventListener('click', function() {
     window.debounce(sortPopularHandler);
   });
 
   // Новые
   function sortNewHandler() {
     window.data(
-        photos
+      photos
         .slice()
-        .sort(function () {
+        .sort(function() {
           return 0.5 - Math.random();
         })
         .splice(0, 10)
     );
   }
-  buttonNew.addEventListener('click', function () {
+  buttonNew.addEventListener('click', function() {
     window.debounce(sortNewHandler);
   });
 
   // Обсуждаемые
   function sortDiscussedHandler() {
     window.data(
-        photos.slice().sort(function (left, right) {
-          return right.comments.length - left.comments.length;
-        })
+      photos.slice().sort(function(left, right) {
+        return right.comments.length - left.comments.length;
+      })
     );
   }
-  buttonDiscussed.addEventListener('click', function () {
+  buttonDiscussed.addEventListener('click', function() {
     window.debounce(sortDiscussedHandler);
   });
 
